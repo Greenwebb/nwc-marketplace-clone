@@ -6,6 +6,9 @@ import ProductCarousel from "@/components/ProductCarousel";
 import DailyDeals from "@/components/DailyDeals";
 import FeaturedBanner from "@/components/FeaturedBanner";
 import BrandLogos from "@/components/BrandLogos";
+import FeaturedOffers from "@/components/FeaturedOffers";
+import FlexiblePayment from "@/components/FlexiblePayment";
+import BenefitsBar from "@/components/BenefitsBar";
 import { Product } from "@/components/ProductCard";
 
 // Mock product data - Daily Deals
@@ -300,76 +303,51 @@ export default function Home() {
         {/* Category Grid */}
         <CategoryGrid />
 
-        {/* Daily Deals Section */}
-        <section className="py-8 bg-white">
+        {/* Featured Banners Section (TV + Daily Deals) */}
+        <section className="py-8 bg-[#ECF0F4]">
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* Daily Deals Banner */}
-              <div className="lg:col-span-1">
-                <DailyDeals />
-              </div>
-              
-              {/* Daily Deals Products */}
-              <div className="lg:col-span-3">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                  {dailyDealsProducts.slice(0, 6).map((product) => (
-                    <div key={product.id}>
-                      <div className="bg-white">
-                        <div className="relative aspect-square overflow-hidden bg-[#F5F5F7]">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-contain p-4"
-                          />
-                          {product.badge === "sale" && product.oldPrice && (
-                            <span className="absolute top-2 left-2 motta-badge-sale">
-                              -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
-                            </span>
-                          )}
-                        </div>
-                        <div className="p-3">
-                          <h3 className="text-sm text-[#1D2128] line-clamp-2 mb-2">{product.name}</h3>
-                          <div className="flex items-center gap-2">
-                            <span className="text-base font-semibold text-[#D8125D]">${product.price.toFixed(2)}</span>
-                            {product.oldPrice && (
-                              <span className="text-sm text-[#7C818B] line-through">${product.oldPrice.toFixed(2)}</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FeaturedBanner
+                badge="FEATURED"
+                title="See the world in a billion shades of color"
+                subtitle="QLED Color Volume with Quantum Dot"
+                primaryButton={{ text: "Explore Now", href: "/shop?category=tvs" }}
+                secondaryButton={{ text: "Learn More", href: "/product/qled-tv" }}
+                image="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&h=400&fit=crop"
+                bgColor="#E8F4FD"
+              />
+              <div className="bg-gradient-to-br from-[#FF6B9D] to-[#FEC163] rounded-sm p-8 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-xs font-semibold text-white uppercase tracking-wider">DEAL OF THE DAY</span>
+                    <span className="bg-white text-[#FF6B9D] text-xs font-bold px-2 py-1 rounded-full">Up to 40%</span>
+                  </div>
+                  <h2 className="text-3xl font-bold text-white mb-2">Daily Deals</h2>
+                  <p className="text-sm text-white/90 mb-6">Today's featured deals until 9pm Tech.</p>
+                  <a
+                    href="/shop?filter=deals"
+                    className="inline-flex items-center justify-center h-[46px] px-8 bg-white text-[#FF6B9D] text-sm font-medium rounded-sm hover:bg-white/90 transition-colors"
+                  >
+                    Shop Now
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Featured Banners */}
-        <section className="py-8 bg-[#ECF0F4]">
-          <div className="container">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FeaturedBanner
-                badge="NEW ARRIVALS"
-                title="GoPro Hero 10 Black Edition"
-                subtitle="Capture your adventures in stunning 5.3K"
-                primaryButton={{ text: "Shop Now", href: "/shop?category=cameras" }}
-                secondaryButton={{ text: "Learn More", href: "/product/gopro-hero-10" }}
-                image="https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=400&h=300&fit=crop"
-                bgColor="#E8F4FD"
-              />
-              <FeaturedBanner
-                badge="FEATURED"
-                title="AirPods Pro with MagSafe"
-                subtitle="Active Noise Cancellation for immersive sound"
-                primaryButton={{ text: "Buy Now", href: "/shop?category=headphones" }}
-                image="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=400&h=300&fit=crop"
-                bgColor="#FFF5F5"
-                variant="right"
-              />
-            </div>
-          </div>
-        </section>
+        {/* Today's Popular Picks */}
+        <ProductCarousel
+          title="Today's Popular Picks"
+          products={dailyDealsProducts}
+          viewAllLink="/shop?filter=popular"
+          viewAllText="See All Products"
+        />
+
+        {/* Flexible Payment Banner */}
+        <FlexiblePayment />
 
         {/* New Arrivals Carousel */}
         <ProductCarousel
@@ -380,7 +358,10 @@ export default function Home() {
           viewAllText="See All Products"
         />
 
-        {/* Brand Logos */}
+        {/* Our Featured Offers */}
+        <FeaturedOffers />
+
+        {/* Trending Brands */}
         <BrandLogos />
 
         {/* Best Sellers Carousel */}
@@ -436,6 +417,9 @@ export default function Home() {
           viewAllText="See All Products"
         />
       </main>
+
+      {/* Benefits Bar */}
+      <BenefitsBar />
 
       <Footer />
     </div>

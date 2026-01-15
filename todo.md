@@ -204,3 +204,17 @@
 - [x] Compare Product Detail page with original Motta site
 - [x] Compare Cart page with original Motta site
 - [x] Refine any remaining differences
+
+## Missing Homepage Sections (From Full Screenshot Analysis)
+- [x] Add "FEATURED" label to hero section
+- [x] Update hero title to "The future of health is on your wrist"
+- [x] Add featured banner section with TV promotion (left) and Daily Deals (right)
+- [x] Refine "Today's Popular Picks" section layout and styling
+- [x] Add "Flexible Payment" banner with decorative curved shapes
+- [x] Add "New Arrivals" section with product carousel
+- [x] Add "Our Featured Offers" grid section with 4 promotional cards
+- [x] Refine benefits bar styling to match original (4 cards with icons)
+- [x] Update product badge styling ("Sale $20.00", "Hot $20.00", "New $30.00")
+- [x] Add circular navigation arrows to carousels
+- [x] Add "See All Products" / "See All Offers" links with proper styling
+- [x] Refine promotional card badges ("FREE GIFT", "SAVE $200", "SAVE 25%")
