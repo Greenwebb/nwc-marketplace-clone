@@ -56,11 +56,11 @@ export default function ProductCard({ product }: ProductCardProps) {
       >
         <div className="relative bg-white rounded-sm overflow-hidden motta-card-hover">
           {/* Image Container */}
-          <div className="relative aspect-square overflow-hidden bg-[#F5F5F7]">
+          <div className="relative aspect-square overflow-hidden bg-white">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
 
             {/* Badge */}

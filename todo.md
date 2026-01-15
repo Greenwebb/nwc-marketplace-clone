@@ -164,3 +164,8 @@
 - [x] Mobile: Compare and Wishlist icons always visible
 - [x] Update card hover state with proper animations
 - [x] Ensure rating stars and review count are always visible
+
+## Product Card Image Fix (User Feedback)
+- [x] Remove gray background padding from product image
+- [x] Make product image fill entire card width
+- [x] Ensure image maintains aspect ratio without visible background
