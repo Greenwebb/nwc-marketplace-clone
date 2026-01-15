@@ -698,8 +698,8 @@ export default function Shop() {
         <div className="bg-white border-b border-[#DADFE3]">
           <div className="container py-3">
             <div className="flex items-center gap-2 text-sm">
-              <Link href="/">
-                <a className="text-[#7C818B] hover:text-[#11248F]">Home</a>
+              <Link href="/" className="text-[#7C818B] hover:text-[#11248F]">
+                Home
               </Link>
               <ChevronRight className="h-4 w-4 text-[#DADFE3]" />
               <span className="text-[#1D2128] font-medium">Shop</span>
