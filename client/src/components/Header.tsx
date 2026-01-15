@@ -242,15 +242,16 @@ export default function Header() {
       </div>
 
       {/* Benefits Bar - White */}
-      <div className={`bg-white border-b border-[#DADFE3] transition-all duration-200 ${isScrolled ? "hidden" : ""}`}>
+      <div className={`bg-white border-b border-[#DADFE3] transition-all duration-200 ${isScrolled ? "hidden" : ""} hidden md:block`}>
         <div className="container">
-          <div className="flex items-center justify-between py-3 overflow-x-auto gap-4">
+          <div className="flex items-center justify-center md:justify-between py-3 overflow-x-auto gap-4 md:gap-6 lg:gap-8">
             {benefits.map((benefit, index) => {
               const Icon = benefit.icon;
               return (
-                <div key={index} className="flex items-center gap-2 text-sm text-[#1D2128] whitespace-nowrap">
-                  <Icon className="h-5 w-5 text-[#7C818B] flex-shrink-0" />
-                  <span>{benefit.text}</span>
+                <div key={index} className="flex items-center gap-2 text-xs md:text-sm text-[#1D2128] whitespace-nowrap flex-shrink-0">
+                  <Icon className="h-4 w-4 md:h-5 md:w-5 text-[#7C818B] flex-shrink-0" />
+                  <span className="hidden lg:inline">{benefit.text}</span>
+                  <span className="lg:hidden">{benefit.text.length > 25 ? benefit.text.substring(0, 25) + '...' : benefit.text}</span>
                 </div>
               );
             })}

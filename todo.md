@@ -638,3 +638,21 @@
 - [ ] Create vendor registration/onboarding flow
 - [ ] Test all vendor features with RBAC
 - [ ] Write vitest tests for vendor procedures
+
+## Design Improvements Inspired by Airbnb & eBay (User Request)
+- [ ] Analyze Airbnb and eBay design patterns
+- [ ] Improve Home page - more whitespace, better imagery, trust signals
+- [ ] Improve product cards - larger images, quick actions, seller info
+- [ ] Add trust indicators - reviews, ratings, verified badges
+- [ ] Improve typography - better hierarchy, readability
+- [ ] Add urgency indicators - stock levels, limited time offers
+- [ ] Improve spacing and padding globally - more breathing room
+- [ ] Add hover effects and micro-interactions
+- [ ] Improve color scheme - more cohesive palette
+- [ ] Test all design improvements
+
+## Fix Benefits Bar Responsiveness (User Request - URGENT)
+- [x] Fix benefits bar text overlapping on mobile (hidden on mobile, visible on md+)
+- [x] Make benefits bar fully responsive with proper text wrapping
+- [x] Hide benefits bar on very small screens (hidden below md breakpoint)
+- [ ] Test on mobile, tablet, and desktop viewports
