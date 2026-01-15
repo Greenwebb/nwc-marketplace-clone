@@ -23,6 +23,9 @@ import OrderTracking from "./pages/(public)/OrderTracking";
 // Customer Dashboard Pages
 import Cart from "./pages/(customer)/Cart";
 import Dashboard from "./pages/(customer)/Dashboard";
+
+// Vendor Dashboard Pages
+import VendorDashboard from "./pages/(vendor)/VendorDashboard";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import Legal from "./pages/Legal";
@@ -49,8 +52,13 @@ function Router() {
         </ProtectedRoute>
       </Route>
       <Route path="/dashboard">
-        <ProtectedRoute requiredRole="customer">
+        <ProtectedRoute requireAuth requiredRole="customer">
           <Dashboard />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/vendor/dashboard">
+        <ProtectedRoute requireAuth requiredRole="vendor">
+          <VendorDashboard />
         </ProtectedRoute>
       </Route>
       <Route path="/select-role">

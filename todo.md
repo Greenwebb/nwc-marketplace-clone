@@ -622,3 +622,19 @@
 - [ ] Polish all UI elements for modern look
 - [ ] Test draggable carousels on mobile and desktop
 - [ ] Verify all design improvements across pages
+
+## Vendor Dashboard Implementation (User Request)
+- [x] Analyze vendor dashboard images and document all features
+- [ ] Create database schema for vendor tables (products, orders, analytics)
+- [x] Build vendor dashboard layout with sidebar navigation (desktop sidebar + mobile bottom nav)
+- [x] Implement vendor dashboard home with stats cards (sales, orders, products, revenue)
+- [ ] Create product management page (list, add, edit, delete products)
+- [ ] Create order management page (list orders, update status, fulfillment)
+- [ ] Create analytics page with charts (sales over time, top products, revenue)
+- [ ] Create vendor settings page (profile, store info, payment settings)
+- [ ] Add vendor-specific tRPC procedures with vendorProcedure middleware
+- [ ] Implement product inventory management
+- [ ] Add order status workflow (pending → processing → shipped → delivered)
+- [ ] Create vendor registration/onboarding flow
+- [ ] Test all vendor features with RBAC
+- [ ] Write vitest tests for vendor procedures
