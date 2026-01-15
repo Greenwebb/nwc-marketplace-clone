@@ -405,3 +405,17 @@
 - [x] Ensure links are visible and accessible in account menu
 - [x] Test all navigation links work correctly
 - [x] Verify navigation to About, Contact, and Careers pages
+
+## Help Center Page Creation (User Request)
+- [x] Analyze Motta Help Center page design and structure
+- [x] Create HelpCenter page component with hero section
+- [x] Add search bar with "Search help topics" placeholder
+- [x] Add popular sections quick links below search
+- [x] Create 6 FAQ category cards (Orders & Purchases, Account, Returns & Refunds, Shipping & Tracking, Fees & billing, Other)
+- [x] Add appropriate icons to each category card
+- [x] Add 5 FAQ links per category with View More link
+- [x] Add bottom CTA section with Contact Us button
+- [x] Add HelpCenter route to App.tsx navigation
+- [x] Update account menu to link to Help Center page
+- [x] Ensure responsive design for mobile, tablet, and desktop
+- [x] Test all sections and interactions

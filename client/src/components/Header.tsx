@@ -390,7 +390,7 @@ export default function Header() {
                   </a>
                 </Link>
 
-                <Link href="/help">
+                <Link href="/help-center">
                   <a
                     className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
                     onClick={() => setIsAccountMenuOpen(false)}
