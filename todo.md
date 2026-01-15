@@ -432,3 +432,16 @@
 - [x] Add FAQ route to App.tsx navigation
 - [x] Ensure responsive design (sidebar becomes top tabs on mobile)
 - [x] Test all accordion interactions and navigation
+
+## Order Tracking Page Creation (User Request)
+- [x] Analyze Motta Order Tracking page design and structure
+- [x] Create OrderTracking page component with hero section
+- [x] Add centered form container with border
+- [x] Add Order ID input field with label and placeholder
+- [x] Add Billing Email input field with label and placeholder
+- [x] Add Track button (blue, full width)
+- [x] Add contact section with Call and Email options
+- [x] Add OrderTracking route to App.tsx navigation
+- [x] Update Header to link Track Order menu item to new page
+- [x] Ensure responsive design for mobile, tablet, and desktop
+- [x] Test form layout and button styling

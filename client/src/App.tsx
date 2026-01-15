@@ -15,6 +15,7 @@ import Careers from "./pages/Careers";
 import About from "./pages/About";
 import HelpCenter from "./pages/HelpCenter";
 import FAQ from "./pages/FAQ";
+import OrderTracking from "./pages/OrderTracking";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/help-center" component={HelpCenter} />
       <Route path="/faq" component={FAQ} />
+      <Route path="/track-order" component={OrderTracking} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
