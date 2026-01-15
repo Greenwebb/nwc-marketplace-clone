@@ -156,3 +156,11 @@
 - [x] Shows recent searches
 - [x] Shows suggested products
 - [x] Category filter in search
+
+## Product Card Refinements (User Feedback)
+- [x] Desktop: Add to cart button appears on hover at bottom of card
+- [x] Desktop: Compare and Wishlist icons appear below Add to cart button on hover
+- [x] Mobile: Add to cart button always visible (not hover-only)
+- [x] Mobile: Compare and Wishlist icons always visible
+- [x] Update card hover state with proper animations
+- [x] Ensure rating stars and review count are always visible

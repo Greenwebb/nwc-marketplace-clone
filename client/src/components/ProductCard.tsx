@@ -54,7 +54,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative bg-white motta-card-hover">
+        <div className="relative bg-white rounded-sm overflow-hidden motta-card-hover">
           {/* Image Container */}
           <div className="relative aspect-square overflow-hidden bg-[#F5F5F7]">
             <img
@@ -83,43 +83,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                 )}
               </div>
             )}
-
-            {/* Quick Action Buttons */}
-            <div
-              className={`absolute top-3 right-3 flex flex-col gap-2 transition-all duration-200 ${
-                isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2"
-              }`}
-            >
-              <button
-                onClick={handleAddToWishlist}
-                className="w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center text-[#7C818B] hover:text-[#D8125D] hover:bg-[#FFF5F5] transition-colors"
-                aria-label="Add to wishlist"
-              >
-                <Heart className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleCompare}
-                className="w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center text-[#7C818B] hover:text-[#11248F] hover:bg-[#ECF0F4] transition-colors"
-                aria-label="Compare"
-              >
-                <GitCompare className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Add to Cart Button */}
-            <div
-              className={`absolute bottom-3 left-3 right-3 transition-all duration-200 ${
-                isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-              }`}
-            >
-              <button
-                onClick={handleAddToCart}
-                className="w-full h-10 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Add to Cart
-              </button>
-            </div>
           </div>
 
           {/* Product Info */}
@@ -146,11 +109,16 @@ export default function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
 
-            {/* Vendor */}
-            <span className="motta-vendor block mb-2">{product.vendor}</span>
+            {/* Vendor with Icon */}
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-4 h-4 bg-[#11248F] rounded-full flex items-center justify-center">
+                <span className="text-[10px] text-white font-bold">{product.vendor.charAt(0).toUpperCase()}</span>
+              </div>
+              <span className="motta-vendor">{product.vendor}</span>
+            </div>
 
-            {/* Rating */}
-            <div className="flex items-center gap-1">
+            {/* Rating - Always Visible */}
+            <div className="flex items-center gap-1 mb-3">
               <div className="flex items-center">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
@@ -164,6 +132,70 @@ export default function ProductCard({ product }: ProductCardProps) {
                 ))}
               </div>
               <span className="text-xs text-[#7C818B]">({product.reviewCount})</span>
+            </div>
+
+            {/* Desktop: Hover Actions | Mobile: Always Visible */}
+            <div className={`space-y-2 transition-all duration-200 md:${isHovered ? "opacity-100 max-h-32" : "opacity-0 max-h-0 overflow-hidden"}`}>
+              {/* Add to Cart Button */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full h-11 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                Add to cart
+              </button>
+
+              {/* Compare and Wishlist Icons */}
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  onClick={handleCompare}
+                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#11248F] hover:border-[#11248F] transition-colors"
+                  aria-label="Compare"
+                  title="Compare"
+                >
+                  <GitCompare className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleAddToWishlist}
+                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#D8125D] hover:border-[#D8125D] transition-colors"
+                  aria-label="Add to wishlist"
+                  title="Add to wishlist"
+                >
+                  <Heart className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile: Always Visible Actions */}
+            <div className="md:hidden space-y-2">
+              {/* Add to Cart Button */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full h-11 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                Add to cart
+              </button>
+
+              {/* Compare and Wishlist Icons */}
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  onClick={handleCompare}
+                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#11248F] hover:border-[#11248F] transition-colors"
+                  aria-label="Compare"
+                  title="Compare"
+                >
+                  <GitCompare className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleAddToWishlist}
+                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#D8125D] hover:border-[#D8125D] transition-colors"
+                  aria-label="Add to wishlist"
+                  title="Add to wishlist"
+                >
+                  <Heart className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
