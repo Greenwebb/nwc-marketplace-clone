@@ -56,6 +56,19 @@ export default function Header() {
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  // Mock cart data - replace with real cart state management
+  const [cartItems, setCartItems] = useState([
+    {
+      id: 1,
+      name: "Powerbeats Pro - Totally Wireless Earphones - Ivory",
+      store: "Casual",
+      price: 150.60,
+      quantity: 1,
+      image: "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=400"
+    }
+  ]);
   const categoryRef = useRef<HTMLDivElement>(null);
   const accountMenuRef = useRef<HTMLDivElement>(null);
 
@@ -204,14 +217,15 @@ export default function Header() {
               </Link>
 
               {/* Cart */}
-              <Link href="/cart">
-                <a className="relative p-2 text-white hover:bg-white/10 rounded-sm transition-colors">
-                  <ShoppingCart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-[#D8125D] text-white text-xs font-medium rounded-full flex items-center justify-center">
-                    0
-                  </span>
-                </a>
-              </Link>
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 text-white hover:bg-white/10 rounded-sm transition-colors"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-[#D8125D] text-white text-xs font-medium rounded-full flex items-center justify-center">
+                  {cartItems.length}
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -385,6 +399,158 @@ export default function Header() {
                 </Link>
               </nav>
             </div>
+          </div>
+        </>
+      )}
+
+      {/* Shopping Cart Side Panel */}
+      {isCartOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+            onClick={() => setIsCartOpen(false)}
+          />
+
+          {/* Cart Panel */}
+          <div className="fixed top-0 right-0 h-full w-full max-w-[420px] bg-white z-50 shadow-2xl transform transition-transform duration-300 flex flex-col">
+            {/* Cart Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-[#1D2128]">
+                Shopping Cart ({cartItems.length})
+              </h2>
+              <button
+                onClick={() => setIsCartOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="h-5 w-5 text-[#7C818B]" />
+              </button>
+            </div>
+
+            {/* Cart Content */}
+            <div className="flex-1 overflow-y-auto">
+              {cartItems.length === 0 ? (
+                /* Empty State */
+                <div className="flex flex-col items-center justify-center h-full px-6 py-12">
+                  <div className="w-32 h-32 mb-6 text-gray-300">
+                    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M40 60h120l-10 80H50L40 60z" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M60 60V40c0-11 9-20 20-20h40c11 0 20 9 20 20v20" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+                      <circle cx="70" cy="160" r="8" fill="currentColor" />
+                      <circle cx="130" cy="160" r="8" fill="currentColor" />
+                    </svg>
+                  </div>
+                  <p className="text-[#7C818B] text-center">No products in the cart.</p>
+                </div>
+              ) : (
+                /* Cart Items */
+                <div className="px-6 py-4 space-y-4">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex gap-4 pb-4 border-b border-gray-100">
+                      {/* Product Image */}
+                      <div className="w-20 h-20 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      {/* Product Info */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-[#1D2128] mb-1 line-clamp-2">
+                          {item.name}
+                        </h3>
+                        <p className="text-xs text-[#7C818B] mb-2">
+                          Store: <span className="font-medium">{item.store}</span>
+                        </p>
+                        <p className="text-lg font-semibold text-[#1D2128]">
+                          ${item.price.toFixed(2)}
+                        </p>
+                      </div>
+
+                      {/* Remove Button */}
+                      <button
+                        onClick={() => setCartItems(cartItems.filter(i => i.id !== item.id))}
+                        className="p-2 text-[#7C818B] hover:text-[#D8125D] transition-colors self-start"
+                      >
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+
+                  {/* Quantity Controls (below product info) */}
+                  {cartItems.map((item) => (
+                    <div key={`qty-${item.id}`} className="flex items-center gap-3 -mt-2 mb-4">
+                      <div className="flex items-center border border-gray-300 rounded-md">
+                        <button
+                          onClick={() => {
+                            setCartItems(cartItems.map(i => 
+                              i.id === item.id && i.quantity > 1 
+                                ? { ...i, quantity: i.quantity - 1 } 
+                                : i
+                            ));
+                          }}
+                          className="px-3 py-1 text-[#7C818B] hover:bg-gray-50 transition-colors"
+                        >
+                          −
+                        </button>
+                        <input
+                          type="text"
+                          value={item.quantity}
+                          readOnly
+                          className="w-12 text-center border-x border-gray-300 py-1 text-sm font-medium text-[#1D2128]"
+                        />
+                        <button
+                          onClick={() => {
+                            setCartItems(cartItems.map(i => 
+                              i.id === item.id 
+                                ? { ...i, quantity: i.quantity + 1 } 
+                                : i
+                            ));
+                          }}
+                          className="px-3 py-1 text-[#7C818B] hover:bg-gray-50 transition-colors"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Cart Footer */}
+            {cartItems.length > 0 && (
+              <div className="border-t border-gray-200 px-6 py-5 space-y-4">
+                {/* Subtotal */}
+                <div className="flex items-center justify-between text-base">
+                  <span className="text-[#7C818B]">
+                    Subtotal ({cartItems.length} item{cartItems.length !== 1 ? 's' : ''})
+                  </span>
+                  <span className="text-xl font-semibold text-[#1D2128]">
+                    ${cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}
+                  </span>
+                </div>
+
+                {/* Checkout Button */}
+                <button className="w-full bg-[#11248F] text-white py-3 rounded-md font-medium hover:bg-[#0d1a6b] transition-colors">
+                  Checkout
+                </button>
+
+                {/* View Cart Link */}
+                <Link href="/cart">
+                  <a
+                    onClick={() => setIsCartOpen(false)}
+                    className="block text-center text-[#11248F] font-medium hover:underline"
+                  >
+                    View Cart
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </>
       )}

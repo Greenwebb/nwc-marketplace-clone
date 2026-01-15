@@ -253,3 +253,18 @@
 - [x] Add overlay background that closes menu on click
 - [x] Connect to Sign in/Register button in header
 - [x] Match exact styling and spacing from screenshot
+
+## Shopping Cart Side Panel (User Request)
+- [x] Create cart side panel component that slides in from right
+- [x] Add cart header with "Shopping Cart (count)" and close button
+- [x] Implement cart item display with product image, title, store name, price
+- [x] Add quantity controls (-, input, +) for each cart item
+- [x] Add remove button (trash icon) for each item
+- [x] Show subtotal calculation
+- [x] Add Checkout button (primary blue)
+- [x] Add "View Cart" link below checkout
+- [x] Implement empty cart state with shopping bag icon and message
+- [x] Add slide-in/out animation
+- [x] Add overlay background that closes cart on click
+- [x] Connect to cart icon in header with item count badge
+- [x] Match exact styling and spacing from screenshots
