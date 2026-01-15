@@ -656,3 +656,38 @@
 - [x] Make benefits bar fully responsive with proper text wrapping
 - [x] Hide benefits bar on very small screens (hidden below md breakpoint)
 - [ ] Test on mobile, tablet, and desktop viewports
+
+## Airbnb/eBay Design Principles Implementation (User Request)
+- [x] Increase whitespace and padding on product cards (p-4 to p-5)
+- [x] Add larger product images with hover zoom effect
+- [x] Implement hover effects on product cards (elevation, lift, image zoom)
+- [ ] Add trust signals - verified seller badges
+- [x] Add review ratings to product cards (already present)
+- [x] Add stock indicators ("Only X left!" for low stock items)
+- [x] Add quick action buttons (Add to Cart appears on hover)
+- [ ] Improve typography hierarchy globally
+- [x] Add subtle shadows to cards (hover:shadow-xl)
+- [ ] Test all design improvements
+
+## Vendor Dashboard Pages Implementation (User Request)
+- [ ] Build vendor products management page
+- [ ] Add product list table with search and filters
+- [ ] Create add/edit product form with image upload
+- [ ] Add product status controls (Published/Draft)
+- [ ] Build vendor orders management page
+- [ ] Add orders list with status filters
+- [ ] Create order details modal
+- [ ] Add status update workflow (Pending → Processing → Shipped → Delivered)
+- [ ] Build vendor analytics page
+- [ ] Add sales chart with date range selector
+- [ ] Add revenue metrics cards
+- [ ] Add top-selling products list
+- [ ] Test all vendor dashboard pages
+
+## Performance Optimizations (User Request)
+- [ ] Implement image lazy loading for all product images
+- [ ] Create skeleton loader component
+- [ ] Add skeleton loaders to product grids
+- [ ] Add skeleton loaders to product carousels
+- [ ] Add skeleton loaders to dashboard sections
+- [ ] Test lazy loading and skeleton loaders

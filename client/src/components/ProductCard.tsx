@@ -1,6 +1,7 @@
 import { Link } from "wouter";
-import { Heart, GitCompare, Star } from "lucide-react";
+import { Heart, GitCompare, Star, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export interface Product {
   id: string;
@@ -36,6 +37,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     toast.success(`${product.name} added to compare`);
   };
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toast.success(`${product.name} added to cart`);
+  };
+
+  // Generate random stock for demo (1-20 items)
+  const stockLevel = Math.floor(Math.random() * 20) + 1;
+  const isLowStock = stockLevel <= 5;
+
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
@@ -45,14 +56,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/product/${product.slug || product.id}`}>
       <a className="block group">
-        <div className="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition-shadow">
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
           {/* Image Container with Floating Buttons */}
-          <div className="relative aspect-square bg-gray-100">
+          <div className="relative aspect-square bg-gray-100 overflow-hidden">
             {/* Product Image */}
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
 
             {/* Discount Badge - Top Left */}
@@ -84,21 +95,33 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
 
             {/* Floating Action Buttons - Top Right */}
-            <div className="absolute top-2 right-2 flex flex-col gap-2">
+            <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <button
                 onClick={handleAddToWishlist}
-                className="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-[#11248F] hover:text-white transition-colors"
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#11248F] hover:text-white transition-colors"
                 aria-label="Add to wishlist"
               >
-                <Heart className="h-4 w-4" />
+                <Heart className="h-5 w-5" />
               </button>
               <button
                 onClick={handleCompare}
-                className="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-[#11248F] hover:text-white transition-colors"
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#11248F] hover:text-white transition-colors"
                 aria-label="Add to compare"
               >
-                <GitCompare className="h-4 w-4" />
+                <GitCompare className="h-5 w-5" />
               </button>
+            </div>
+
+            {/* Add to Cart Button - Bottom (appears on hover) */}
+            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Button
+                onClick={handleAddToCart}
+                size="sm"
+                className="w-full bg-white text-[#11248F] hover:bg-[#11248F] hover:text-white font-semibold"
+              >
+                <ShoppingCart className="h-4 w-4 mr-2" />
+                Add to Cart
+              </Button>
             </div>
 
             {/* Color Variants Indicator - Bottom Left */}
@@ -110,7 +133,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Product Info */}
-          <div className="p-3 md:p-4">
+          <div className="p-4 md:p-5">
             {/* Category */}
             <span className="text-xs text-[#7C818B] block mb-1">
               {product.category}
@@ -148,14 +171,21 @@ export default function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
 
-            {/* Vendor */}
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-[#11248F] flex items-center justify-center">
-                <span className="text-white text-[10px] font-semibold">
-                  {product.vendor.charAt(0).toUpperCase()}
-                </span>
+            {/* Vendor & Stock */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded-full bg-[#11248F] flex items-center justify-center">
+                  <span className="text-white text-[10px] font-semibold">
+                    {product.vendor.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <span className="text-xs text-[#7C818B]">{product.vendor}</span>
               </div>
-              <span className="text-xs text-[#7C818B]">{product.vendor}</span>
+              {inStock && isLowStock && (
+                <span className="text-xs font-medium text-[#FF6B00]">
+                  Only {stockLevel} left!
+                </span>
+              )}
             </div>
           </div>
         </div>
