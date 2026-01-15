@@ -381,3 +381,18 @@
 - [x] Add Careers route to App.tsx navigation
 - [x] Ensure responsive design for mobile, tablet, and desktop
 - [x] Test all interactions and sections
+
+## About Us Page Creation (User Request)
+- [x] Analyze Motta About Us page design from screenshot
+- [x] Create About Us page component with hero section and office image
+- [x] Add mission statement section "Good for people, good for the planet" with yellow background
+- [x] Add partner logos section "We work with the best partners"
+- [x] Add features section "We give you the power to create spaces that are right for you"
+- [x] Add three feature cards (Choose a Theme, Add products, Start Selling)
+- [x] Add Company History Timeline section with mint green background
+- [x] Add team members section "Here is the team at the helm of the ship"
+- [x] Add investors section "We're lucky to be supported by some of the best investors"
+- [x] Add final CTA section "Purchase the Motta now and make everything easier"
+- [x] Add About route to App.tsx navigation
+- [x] Ensure responsive design for mobile, tablet, and desktop
+- [x] Test all sections and interactions
