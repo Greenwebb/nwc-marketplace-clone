@@ -600,10 +600,8 @@ export default function Shop() {
         {/* Product Info */}
         <div className="flex-1 flex flex-col">
           <div className="text-xs text-[#7C818B] mb-1">Sku: MO1927</div>
-          <Link href={`/product/${product.id}`}>
-            <a className="text-lg font-medium text-[#1D2128] hover:text-[#11248F] mb-2 line-clamp-2">
-              {product.name}
-            </a>
+          <Link href={`/product/${product.id}`} className="text-lg font-medium text-[#1D2128] hover:text-[#11248F] mb-2 line-clamp-2 block">
+            {product.name}
           </Link>
 
           {/* Rating */}

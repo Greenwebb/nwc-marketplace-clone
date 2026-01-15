@@ -343,3 +343,8 @@
 - [x] Update product grid to support multiple column layouts (2, 3, 4, 5, 6 columns)
 - [x] Ensure all filters are collapsible with expand/collapse functionality
 - [x] Test all filter combinations and view options
+
+## Fix Nested Anchor Tag Error (User Report)
+- [x] Identify where nested `<a>` tags exist in Shop page list view
+- [x] Remove nested anchor tags while preserving functionality
+- [x] Test to ensure error is resolved
