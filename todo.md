@@ -230,3 +230,12 @@
 - [x] Refine benefits bar icons and text alignment
 - [x] Match exact header background color (#11248F for main, light blue for benefits)
 - [x] Ensure proper spacing and padding throughout header
+
+## Category Dropdown Refinements (From Screenshots)
+- [x] Replace Grid3X3 icon with proper grid icon for Categories button
+- [x] Add specific category icons for each category (laptop, TV, phone, watch, appliance, camera, tablet, headphones, router)
+- [x] Update dropdown item styling with proper spacing and padding
+- [x] Ensure right-pointing chevron arrows on each category item
+- [x] Match dropdown width and positioning
+- [x] Add hover states for dropdown items
+- [x] Ensure proper typography and icon sizing

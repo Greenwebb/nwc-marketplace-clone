@@ -14,20 +14,29 @@ import {
   Shield,
   Calendar,
   RotateCcw,
+  Laptop,
+  Tv,
+  Smartphone,
+  Watch,
+  Refrigerator,
+  Camera,
+  Tablet,
+  Headphones,
+  Router,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-// Category data
+// Category data with icons
 const categories = [
-  { name: "Laptops & Computers", slug: "laptops-computers", hasSubmenu: true },
-  { name: "TVs & Video", slug: "tvs-video", hasSubmenu: true },
-  { name: "Cell Phones", slug: "cell-phones", hasSubmenu: true },
-  { name: "Wearable Tech", slug: "wearable-tech", hasSubmenu: true },
-  { name: "Appliances", slug: "appliances", hasSubmenu: true },
-  { name: "Cameras", slug: "cameras", hasSubmenu: true },
-  { name: "iPads & Tablets", slug: "ipads-tablets", hasSubmenu: true },
-  { name: "Headphones", slug: "headphones", hasSubmenu: true },
-  { name: "Networking", slug: "networking", hasSubmenu: true },
+  { name: "Laptops & Computers", slug: "laptops-computers", icon: Laptop, hasSubmenu: true },
+  { name: "TVs & Video", slug: "tvs-video", icon: Tv, hasSubmenu: true },
+  { name: "Cell Phones", slug: "cell-phones", icon: Smartphone, hasSubmenu: true },
+  { name: "Wearable Tech", slug: "wearable-tech", icon: Watch, hasSubmenu: true },
+  { name: "Appliances", slug: "appliances", icon: Refrigerator, hasSubmenu: true },
+  { name: "Cameras", slug: "cameras", icon: Camera, hasSubmenu: true },
+  { name: "iPads & Tablets", slug: "ipads-tablets", icon: Tablet, hasSubmenu: true },
+  { name: "Headphones", slug: "headphones", icon: Headphones, hasSubmenu: true },
+  { name: "Networking", slug: "networking", icon: Router, hasSubmenu: true },
 ];
 
 // Benefits bar items
@@ -112,18 +121,22 @@ export default function Header() {
 
                 {/* Category Dropdown Menu */}
                 {isCategoryOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-sm shadow-lg border border-[#DADFE3] py-2 z-50">
-                    {categories.map((category) => (
-                      <Link key={category.slug} href={`/shop?category=${category.slug}`}>
-                        <a
-                          className="flex items-center justify-between px-4 py-3 text-sm text-[#1D2128] hover:bg-[#ECF0F4] transition-colors"
-                          onClick={() => setIsCategoryOpen(false)}
-                        >
-                          <span>{category.name}</span>
-                          {category.hasSubmenu && <ChevronDown className="h-4 w-4 -rotate-90" />}
-                        </a>
-                      </Link>
-                    ))}
+                  <div className="absolute top-full left-0 mt-2 w-[280px] bg-white rounded-sm shadow-lg border border-[#DADFE3] py-2 z-50">
+                    {categories.map((category) => {
+                      const IconComponent = category.icon;
+                      return (
+                        <Link key={category.slug} href={`/shop?category=${category.slug}`}>
+                          <a
+                            className="flex items-center gap-3 px-5 py-3 text-[15px] text-[#1D2128] hover:bg-[#ECF0F4] transition-colors group"
+                            onClick={() => setIsCategoryOpen(false)}
+                          >
+                            <IconComponent className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" strokeWidth={1.5} />
+                            <span className="flex-1">{category.name}</span>
+                            {category.hasSubmenu && <ChevronDown className="h-4 w-4 -rotate-90 text-[#7C818B]" />}
+                          </a>
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
