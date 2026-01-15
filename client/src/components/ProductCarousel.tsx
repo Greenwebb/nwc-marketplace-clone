@@ -21,6 +21,9 @@ export default function ProductCarousel({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
@@ -41,6 +44,49 @@ export default function ProductCarousel({
     }
   };
 
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) setIsDragging(false);
+  };
+
+  // Touch drag handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   return (
     <section className="py-8 bg-white">
       <div className="container">
@@ -59,9 +105,9 @@ export default function ProductCarousel({
               <button
                 onClick={() => scroll("left")}
                 disabled={!canScrollLeft}
-                className={`w-10 h-10 rounded-full border border-[#DADFE3] flex items-center justify-center transition-colors ${
+                className={`w-11 h-11 rounded-xl border-2 border-[#DADFE3] flex items-center justify-center transition-all ${
                   canScrollLeft
-                    ? "text-[#1D2128] hover:bg-[#ECF0F4]"
+                    ? "text-[#1D2128] hover:bg-[#ECF0F4] hover:border-[#11248F]"
                     : "text-[#DADFE3] cursor-not-allowed"
                 }`}
                 aria-label="Scroll left"
@@ -71,9 +117,9 @@ export default function ProductCarousel({
               <button
                 onClick={() => scroll("right")}
                 disabled={!canScrollRight}
-                className={`w-10 h-10 rounded-full border border-[#DADFE3] flex items-center justify-center transition-colors ${
+                className={`w-11 h-11 rounded-xl border-2 border-[#DADFE3] flex items-center justify-center transition-all ${
                   canScrollRight
-                    ? "text-[#1D2128] hover:bg-[#ECF0F4]"
+                    ? "text-[#1D2128] hover:bg-[#ECF0F4] hover:border-[#11248F]"
                     : "text-[#DADFE3] cursor-not-allowed"
                 }`}
                 aria-label="Scroll right"
@@ -97,12 +143,20 @@ export default function ProductCarousel({
         <div
           ref={scrollContainerRef}
           onScroll={checkScrollButtons}
-          className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide scroll-smooth cursor-grab active:cursor-grabbing select-none"
         >
           {products.map((product) => (
             <div
               key={product.id}
               className="flex-shrink-0 w-[200px] sm:w-[220px] md:w-[240px]"
+              onDragStart={(e) => e.preventDefault()}
             >
               <ProductCard product={product} />
             </div>

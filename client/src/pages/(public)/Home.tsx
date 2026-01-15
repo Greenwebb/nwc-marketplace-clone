@@ -328,7 +328,7 @@ export default function Home() {
                   <p className="text-sm text-white/90 mb-6">Today's featured deals until 9pm Tech.</p>
                   <a
                     href="/shop?filter=deals"
-                    className="inline-flex items-center justify-center h-[46px] px-8 bg-white text-[#FF6B9D] text-sm font-medium rounded-sm hover:bg-white/90 transition-colors"
+                    className="inline-flex items-center justify-center h-12 px-8 bg-white text-[#FF6B9D] text-sm font-semibold rounded-xl hover:bg-white/90 transition-all shadow-md hover:shadow-lg"
                   >
                     Shop Now
                   </a>
@@ -399,7 +399,7 @@ export default function Home() {
                 </div>
                 <a
                   href="/shop"
-                  className="inline-flex items-center justify-center h-[46px] px-8 bg-white text-[#11248F] text-sm font-medium rounded-sm hover:bg-white/90 transition-colors"
+                  className="inline-flex items-center justify-center h-12 px-8 bg-white text-[#11248F] text-sm font-semibold rounded-xl hover:bg-white/90 transition-all shadow-md hover:shadow-lg"
                 >
                   Shop Now
                 </a>

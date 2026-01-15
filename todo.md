@@ -591,3 +591,34 @@
 - [ ] Check responsive behavior across all pages
 - [ ] Verify performance improvements
 - [ ] Run comprehensive button functionality audit
+
+## Product Detail Page Creation (User Request)
+- [ ] Create ProductDetail page component with route parameter
+- [ ] Add image gallery with main image and thumbnail carousel
+- [ ] Implement image zoom on hover (desktop) and pinch-to-zoom (mobile)
+- [ ] Add sticky "Add to Cart" button for mobile
+- [ ] Add product title, price, rating, and vendor information
+- [ ] Add quantity selector with plus/minus buttons
+- [ ] Add size/color variant selectors
+- [ ] Add "Add to Wishlist" and "Add to Compare" buttons
+- [ ] Create product specifications section with tabs
+- [ ] Add customer reviews section with rating breakdown
+- [ ] Add review submission form
+- [ ] Create related products carousel (draggable)
+- [ ] Add breadcrumb navigation
+- [ ] Ensure fully responsive design
+- [ ] Test all interactions and mobile enhancements
+
+## Website Modernization (User Request)
+- [x] Modernize home page design - updated buttons to larger rounded styles with shadows
+- [x] Remove horizontal scrolls, replace with draggable carousels
+- [x] Implement swipeable/draggable product carousels (left-right)
+- [x] Make all buttons larger and slightly rounded globally (updated button component with larger sizes h-11, h-12, h-14 and rounded-lg/xl)
+- [ ] Round top ends of bottom navigation
+- [x] Improve overall design aesthetic - modernized button component globally
+- [ ] Standardize spacing and typography
+- [x] Add smooth transitions and micro-animations (added to buttons and carousels)
+- [ ] Improve color scheme consistency
+- [ ] Polish all UI elements for modern look
+- [ ] Test draggable carousels on mobile and desktop
+- [ ] Verify all design improvements across pages
