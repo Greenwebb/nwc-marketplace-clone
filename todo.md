@@ -278,3 +278,14 @@
 - [x] Check font-family declaration in index.css
 - [x] Ensure font is applied to body and all elements
 - [x] Test font rendering across all pages
+
+## Mobile-Specific Features (User Request)
+- [x] Create bottom navigation bar component (Home, Shop, Cart with badge, Account)
+- [x] Bottom nav should be fixed at bottom on mobile devices only
+- [x] Bottom nav icons should match Motta design with proper styling
+- [x] Create full-screen search overlay that appears when search icon is clicked
+- [x] Search overlay should have white background with search input at top and Close button at bottom
+- [x] Update mobile header to hide search bar and show search icon instead
+- [x] Mobile header should show: hamburger menu, logo, search icon, region flag, cart icon
+- [x] Ensure bottom nav only shows on mobile/tablet, not on desktop
+- [x] Test all mobile features across different viewport sizes

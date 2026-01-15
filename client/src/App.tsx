@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { BottomNav } from "./components/BottomNav";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
@@ -41,6 +42,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <BottomNav cartItemCount={1} />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

@@ -161,6 +161,13 @@
     font-size: 16px;
     line-height: 24px;
   }
+  
+  /* Add padding for mobile bottom nav */
+  @media (max-width: 767px) {
+    body {
+      padding-bottom: 64px;
+    }
+  }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "wouter";
+import { SearchOverlay } from "./SearchOverlay";
 import {
   Search,
   Heart,
@@ -57,6 +58,7 @@ export default function Header() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
   
   // Mock cart data - replace with real cart state management
   const [cartItems, setCartItems] = useState([
@@ -199,12 +201,18 @@ export default function Header() {
                 </div>
               </button>
 
-              {/* Mobile Account Icon */}
-              <Link href="/dashboard">
-                <a className="lg:hidden p-2 text-white hover:bg-white/10 rounded-sm transition-colors">
-                  <User className="h-5 w-5" />
-                </a>
-              </Link>
+              {/* Mobile Search Icon */}
+              <button
+                onClick={() => setIsSearchOverlayOpen(true)}
+                className="md:hidden p-2 text-white hover:bg-white/10 rounded-sm transition-colors"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+
+              {/* Region Flag - Mobile */}
+              <button className="md:hidden p-2 text-white hover:bg-white/10 rounded-sm transition-colors">
+                <span className="text-lg">🇬🇧</span>
+              </button>
 
               {/* Wishlist */}
               <Link href="/wishlist">
@@ -250,19 +258,11 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Search Bar */}
-      <div className="md:hidden bg-white border-b border-[#DADFE3] px-4 py-3">
-        <div className="relative flex items-center bg-[#ECF0F4] rounded-sm overflow-hidden">
-          <Input
-            type="text"
-            placeholder="Search for anything"
-            className="h-[44px] border-0 bg-transparent text-sm text-[#1D2128] placeholder:text-[#7C818B] focus-visible:ring-0 focus-visible:ring-offset-0 pr-12"
-          />
-          <button className="absolute right-0 h-full px-4 text-[#7C818B]">
-            <Search className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
+      {/* Search Overlay for Mobile */}
+      <SearchOverlay 
+        isOpen={isSearchOverlayOpen} 
+        onClose={() => setIsSearchOverlayOpen(false)} 
+      />
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
