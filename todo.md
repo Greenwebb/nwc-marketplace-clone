@@ -268,3 +268,7 @@
 - [x] Add overlay background that closes cart on click
 - [x] Connect to cart icon in header with item count badge
 - [x] Match exact styling and spacing from screenshots
+
+## Wishlist Badge Positioning Fix (User Report)
+- [x] Fix wishlist heart icon badge positioning to match cart icon badge
+- [x] Ensure badge is positioned at top-right corner of icon, not floating away

@@ -208,11 +208,13 @@ export default function Header() {
 
               {/* Wishlist */}
               <Link href="/wishlist">
-                <a className="relative p-2 text-white hover:bg-white/10 rounded-sm transition-colors">
-                  <Heart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-[#D8125D] text-white text-xs font-medium rounded-full flex items-center justify-center">
-                    0
-                  </span>
+                <a className="p-2 text-white hover:bg-white/10 rounded-sm transition-colors">
+                  <div className="relative">
+                    <Heart className="h-5 w-5" />
+                    <span className="absolute -top-1 -right-1 h-5 w-5 bg-[#D8125D] text-white text-xs font-medium rounded-full flex items-center justify-center">
+                      0
+                    </span>
+                  </div>
                 </a>
               </Link>
 
