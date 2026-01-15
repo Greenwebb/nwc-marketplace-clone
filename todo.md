@@ -419,3 +419,16 @@
 - [x] Update account menu to link to Help Center page
 - [x] Ensure responsive design for mobile, tablet, and desktop
 - [x] Test all sections and interactions
+
+## FAQ Page Creation (User Request)
+- [x] Analyze Motta FAQ page design and structure
+- [x] Create FAQ page component with hero section
+- [x] Add left sidebar with category navigation (sticky on desktop)
+- [x] Create accordion component for FAQ items
+- [x] Add 6 FAQ categories (Orders & Purchases, Account, Returns & Refunds, Shipping & Tracking, Fees & billing, Other)
+- [x] Add FAQ questions and answers for each category
+- [x] Implement expand/collapse functionality for accordion items
+- [x] Add bottom CTA section with Help Center and Contact links
+- [x] Add FAQ route to App.tsx navigation
+- [x] Ensure responsive design (sidebar becomes top tabs on mobile)
+- [x] Test all accordion interactions and navigation
