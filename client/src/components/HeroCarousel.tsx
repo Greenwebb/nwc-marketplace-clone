@@ -1,53 +1,58 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface Slide {
   id: number;
   badge: string;
   title: string;
-  description: string;
+  subtitle: string;
+  primaryButton: { text: string; href: string };
+  secondaryButton: { text: string; href: string };
   image: string;
-  primaryAction: { label: string; href: string };
-  secondaryAction: { label: string; href: string };
+  bgColor: string;
 }
 
 const slides: Slide[] = [
   {
     id: 1,
     badge: "NEW ARRIVALS",
-    title: "Say hello to the new iMac.",
-    description: "You've never seen a computer like this before",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop",
-    primaryAction: { label: "Buy Now", href: "/product/imac" },
-    secondaryAction: { label: "Learn More", href: "/products/imac" },
+    title: "Say hello to the\nnew iMac.",
+    subtitle: "You've never seen a computer like this before",
+    primaryButton: { text: "Buy Now", href: "/shop?category=laptops-computers" },
+    secondaryButton: { text: "Learn More", href: "/product/imac" },
+    image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&h=500&fit=crop",
+    bgColor: "#F5F5F7",
   },
   {
     id: 2,
     badge: "FEATURED",
-    title: "See the world in a billion shades of color",
-    description: "100% Color Volume with Quantum Dot",
-    image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&h=600&fit=crop",
-    primaryAction: { label: "Explore Now", href: "/product/tv" },
-    secondaryAction: { label: "Learn More", href: "/products/tv" },
+    title: "GoPro Hero 10\nBlack Edition",
+    subtitle: "Capture your adventures in stunning 5.3K",
+    primaryButton: { text: "Shop Now", href: "/shop?category=cameras" },
+    secondaryButton: { text: "Learn More", href: "/product/gopro" },
+    image: "https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&h=500&fit=crop",
+    bgColor: "#E8F4FD",
   },
   {
     id: 3,
     badge: "BEST SELLER",
-    title: "Experience wireless freedom",
-    description: "Premium sound quality with active noise cancellation",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop",
-    primaryAction: { label: "Shop Now", href: "/product/headphones" },
-    secondaryAction: { label: "Learn More", href: "/products/headphones" },
+    title: "AirPods Pro\nwith MagSafe",
+    subtitle: "Active Noise Cancellation for immersive sound",
+    primaryButton: { text: "Buy Now", href: "/shop?category=headphones" },
+    secondaryButton: { text: "Learn More", href: "/product/airpods-pro" },
+    image: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=600&h=500&fit=crop",
+    bgColor: "#FFF5F5",
   },
   {
     id: 4,
-    badge: "TRENDING",
-    title: "Capture every moment",
-    description: "Professional photography made simple",
-    image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&h=600&fit=crop",
-    primaryAction: { label: "Discover", href: "/product/camera" },
-    secondaryAction: { label: "Learn More", href: "/products/camera" },
+    badge: "NEW RELEASE",
+    title: "Galaxy Watch\nUltra Series",
+    subtitle: "Your ultimate fitness companion",
+    primaryButton: { text: "Shop Now", href: "/shop?category=wearable-tech" },
+    secondaryButton: { text: "Learn More", href: "/product/galaxy-watch" },
+    image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=500&fit=crop",
+    bgColor: "#F0F8FF",
   },
 ];
 
@@ -55,112 +60,126 @@ export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  }, []);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      nextSlide();
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, nextSlide]);
 
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
-
-  const goToPrevious = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
-
-  const goToNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+  const handleMouseEnter = () => setIsAutoPlaying(false);
+  const handleMouseLeave = () => setIsAutoPlaying(true);
 
   return (
-    <div className="relative w-full overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl">
-      {/* Slides */}
-      <div
-        className="flex transition-transform duration-700 ease-in-out"
-        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-      >
-        {slides.map((slide) => (
-          <div key={slide.id} className="min-w-full">
-            <div className="container py-12 md:py-20">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                {/* Content */}
-                <div className="space-y-6">
-                  <span className="inline-block text-xs font-semibold tracking-wider text-primary uppercase">
+    <div
+      className="relative overflow-hidden bg-[#ECF0F4]"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="container">
+        {/* Slides Container */}
+        <div className="relative h-[300px] sm:h-[350px] md:h-[388px]">
+          {slides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-500 ${
+                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+              style={{ backgroundColor: slide.bgColor }}
+            >
+              <div className="h-full flex flex-col md:flex-row items-center">
+                {/* Content Side */}
+                <div className="flex-1 py-6 md:py-0 px-4 md:px-0 text-center md:text-left">
+                  {/* Badge */}
+                  <span className="inline-block text-xs font-medium text-[#11248F] tracking-wider mb-3">
                     {slide.badge}
                   </span>
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+
+                  {/* Title */}
+                  <h1 className="text-2xl sm:text-3xl md:text-[30px] font-bold text-[#1D2128] leading-tight mb-3 whitespace-pre-line">
                     {slide.title}
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-md">
-                    {slide.description}
+                  </h1>
+
+                  {/* Subtitle */}
+                  <p className="text-sm md:text-base text-[#7C818B] mb-6">
+                    {slide.subtitle}
                   </p>
-                  <div className="flex flex-wrap gap-4">
-                    <Button size="lg" className="rounded-full px-8">
-                      {slide.primaryAction.label}
-                    </Button>
-                    <Button size="lg" variant="outline" className="rounded-full px-8">
-                      {slide.secondaryAction.label}
-                    </Button>
+
+                  {/* Buttons */}
+                  <div className="flex items-center justify-center md:justify-start gap-3">
+                    <Link href={slide.primaryButton.href}>
+                      <a className="inline-flex items-center justify-center h-[46px] px-6 bg-[#11248F] text-white text-sm font-medium rounded-sm hover:bg-[#0d1c6e] transition-colors">
+                        {slide.primaryButton.text}
+                      </a>
+                    </Link>
+                    <Link href={slide.secondaryButton.href}>
+                      <a className="inline-flex items-center justify-center h-[46px] px-6 text-[#1D2128] text-sm font-medium border-b border-[#1D2128] hover:text-[#11248F] hover:border-[#11248F] transition-colors">
+                        {slide.secondaryButton.text}
+                      </a>
+                    </Link>
                   </div>
                 </div>
 
-                {/* Image */}
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+                {/* Image Side */}
+                <div className="flex-1 h-full flex items-center justify-center p-4 md:p-8">
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className="w-full h-full object-cover"
+                    className="max-h-full max-w-full object-contain"
                   />
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Navigation arrows */}
-      <Button
-        variant="outline"
-        size="icon"
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur hidden md:flex"
-        onClick={goToPrevious}
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur hidden md:flex"
-        onClick={goToNext}
-      >
-        <ChevronRight className="h-5 w-5" />
-      </Button>
+        {/* Navigation Arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-[#1D2128] hover:bg-[#ECF0F4] transition-colors"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-[#1D2128] hover:bg-[#ECF0F4] transition-colors"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
 
-      {/* Dots navigation */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all ${
-              index === currentSlide
-                ? "w-8 bg-primary"
-                : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+        {/* Dots Navigation */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentSlide
+                  ? "bg-[#11248F] w-6"
+                  : "bg-[#DADFE3] hover:bg-[#7C818B]"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

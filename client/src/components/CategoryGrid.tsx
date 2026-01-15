@@ -1,73 +1,60 @@
 import { Link } from "wouter";
-import { Laptop, Tv, Smartphone, Watch, Home, Camera, Tablet, Headphones } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { 
+  Laptop, 
+  Tv, 
+  Smartphone, 
+  Watch, 
+  Refrigerator, 
+  Camera, 
+  Tablet, 
+  Headphones, 
+  Wifi 
+} from "lucide-react";
 
 interface Category {
   name: string;
-  href: string;
-  icon: React.ReactNode;
+  slug: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
 }
 
 const categories: Category[] = [
-  {
-    name: "Laptop & Computer",
-    href: "/category/laptops",
-    icon: <Laptop className="h-8 w-8" />,
-  },
-  {
-    name: "TVs & Video",
-    href: "/category/tvs",
-    icon: <Tv className="h-8 w-8" />,
-  },
-  {
-    name: "Cell Phones",
-    href: "/category/phones",
-    icon: <Smartphone className="h-8 w-8" />,
-  },
-  {
-    name: "Wearable Tech",
-    href: "/category/wearable",
-    icon: <Watch className="h-8 w-8" />,
-  },
-  {
-    name: "Appliances",
-    href: "/category/appliances",
-    icon: <Home className="h-8 w-8" />,
-  },
-  {
-    name: "Cameras",
-    href: "/category/cameras",
-    icon: <Camera className="h-8 w-8" />,
-  },
-  {
-    name: "iPads & Tablets",
-    href: "/category/tablets",
-    icon: <Tablet className="h-8 w-8" />,
-  },
-  {
-    name: "Headphones",
-    href: "/category/headphones",
-    icon: <Headphones className="h-8 w-8" />,
-  },
+  { name: "Laptop&Computer", slug: "laptops-computers", icon: Laptop },
+  { name: "TVs & Video", slug: "tvs-video", icon: Tv },
+  { name: "Cell Phones", slug: "cell-phones", icon: Smartphone },
+  { name: "Wearable Tech", slug: "wearable-tech", icon: Watch },
+  { name: "Appliances", slug: "appliances", icon: Refrigerator },
+  { name: "Cameras", slug: "cameras", icon: Camera },
+  { name: "iPads&Tablets", slug: "ipads-tablets", icon: Tablet },
+  { name: "Headphones", slug: "headphones", icon: Headphones },
+  { name: "Networking", slug: "networking", icon: Wifi },
 ];
 
 export default function CategoryGrid() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
-      {categories.map((category) => (
-        <Link key={category.name} href={category.href}>
-          <a>
-            <Card className="group hover:border-primary/50 hover:shadow-md transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 flex flex-col items-center justify-center text-center space-y-3">
-                <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
-                </div>
-                <h3 className="text-sm font-medium leading-tight">{category.name}</h3>
-              </CardContent>
-            </Card>
-          </a>
-        </Link>
-      ))}
-    </div>
+    <section className="py-6 bg-white border-b border-[#DADFE3]">
+      <div className="container">
+        {/* Horizontal scrollable on mobile, grid on desktop */}
+        <div className="flex lg:grid lg:grid-cols-9 gap-4 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <Link key={category.slug} href={`/shop?category=${category.slug}`}>
+                <a className="flex flex-col items-center justify-center min-w-[100px] lg:min-w-0 p-4 hover:bg-[#ECF0F4] rounded-sm transition-colors group">
+                  {/* Icon Container */}
+                  <div className="w-16 h-16 flex items-center justify-center mb-3">
+                    <Icon className="w-10 h-10 text-[#7C818B] group-hover:text-[#11248F] transition-colors" strokeWidth={1.5} />
+                  </div>
+                  
+                  {/* Category Name */}
+                  <span className="text-xs text-[#1D2128] text-center whitespace-nowrap">
+                    {category.name}
+                  </span>
+                </a>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }

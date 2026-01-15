@@ -2,11 +2,9 @@ import { useState } from "react";
 import { Link, useParams } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Heart, ShoppingCart, Truck, RotateCcw, Shield, ChevronRight, Minus, Plus } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Star, Heart, ShoppingCart, Truck, RotateCcw, Shield, ChevronRight, Minus, Plus, Share2, GitCompare } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -50,22 +48,25 @@ export default function ProductDetail() {
       id: 1,
       author: "John Doe",
       rating: 5,
-      date: "2024-01-15",
-      comment: "Excellent laptop! Perfect for everyday use and light development work.",
+      date: "January 15, 2024",
+      comment: "Excellent laptop! Perfect for everyday use and light development work. The build quality is superb and the keyboard is a joy to type on.",
+      helpful: 12,
     },
     {
       id: 2,
       author: "Jane Smith",
       rating: 4,
-      date: "2024-01-10",
-      comment: "Great build quality and performance. Battery life is impressive.",
+      date: "January 10, 2024",
+      comment: "Great build quality and performance. Battery life is impressive. Only wish it had more ports.",
+      helpful: 8,
     },
     {
       id: 3,
       author: "Mike Johnson",
       rating: 5,
-      date: "2024-01-05",
-      comment: "Love the gold color and the keyboard is much better than previous models.",
+      date: "January 5, 2024",
+      comment: "Love the gold color and the keyboard is much better than previous models. Highly recommended!",
+      helpful: 15,
     },
   ];
 
@@ -73,248 +74,286 @@ export default function ProductDetail() {
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
 
+  const handleAddToCart = () => {
+    toast.success(`${quantity} x ${product.name} added to cart`);
+  };
+
+  const handleAddToWishlist = () => {
+    toast.success(`${product.name} added to wishlist`);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#ECF0F4]">
       <Header />
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="border-b">
-          <div className="container py-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="bg-white border-b border-[#DADFE3]">
+          <div className="container py-3">
+            <div className="flex items-center gap-2 text-sm">
               <Link href="/">
-                <a className="hover:text-foreground">Home</a>
+                <a className="text-[#7C818B] hover:text-[#11248F]">Home</a>
               </Link>
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 text-[#DADFE3]" />
               <Link href="/shop">
-                <a className="hover:text-foreground">Shop</a>
+                <a className="text-[#7C818B] hover:text-[#11248F]">Shop</a>
               </Link>
-              <ChevronRight className="h-4 w-4" />
-              <Link href={`/category/${product.category.toLowerCase()}`}>
-                <a className="hover:text-foreground">{product.category}</a>
+              <ChevronRight className="h-4 w-4 text-[#DADFE3]" />
+              <Link href={`/shop?category=${product.category.toLowerCase()}`}>
+                <a className="text-[#7C818B] hover:text-[#11248F]">{product.category}</a>
               </Link>
-              <ChevronRight className="h-4 w-4" />
-              <span className="text-foreground font-medium truncate">{product.name}</span>
+              <ChevronRight className="h-4 w-4 text-[#DADFE3]" />
+              <span className="text-[#1D2128] font-medium truncate max-w-[200px]">{product.name}</span>
             </div>
           </div>
         </div>
 
-        <div className="container py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
-            {/* Image Gallery */}
-            <div className="space-y-4">
-              <div className="aspect-square rounded-xl overflow-hidden bg-muted/30">
-                <img
-                  src={product.images[selectedImage]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="grid grid-cols-4 gap-4">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedImage === index
-                        ? "border-primary"
-                        : "border-transparent hover:border-muted-foreground/30"
-                    }`}
-                  >
-                    <img src={image} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Product Info */}
-            <div className="space-y-6">
-              <div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                  <Link href={`/category/${product.category.toLowerCase()}`}>
-                    <a className="hover:text-primary">{product.category}</a>
-                  </Link>
-                  <span>•</span>
-                  <span>SKU: {product.sku}</span>
+        <div className="container py-6">
+          {/* Product Main Section */}
+          <div className="bg-white rounded-sm p-6 mb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Image Gallery */}
+              <div className="space-y-4">
+                {/* Main Image */}
+                <div className="relative aspect-square bg-[#F5F5F7] rounded-sm overflow-hidden">
+                  <img
+                    src={product.images[selectedImage]}
+                    alt={product.name}
+                    className="w-full h-full object-contain p-8"
+                  />
+                  {product.oldPrice && (
+                    <span className="absolute top-4 left-4 motta-badge-sale">-{discount}%</span>
+                  )}
                 </div>
-                <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+                
+                {/* Thumbnail Images */}
+                <div className="grid grid-cols-4 gap-3">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`aspect-square bg-[#F5F5F7] rounded-sm overflow-hidden border-2 transition-all ${
+                        selectedImage === index
+                          ? "border-[#11248F]"
+                          : "border-transparent hover:border-[#DADFE3]"
+                      }`}
+                    >
+                      <img src={image} alt={`${product.name} ${index + 1}`} className="w-full h-full object-contain p-2" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Product Info */}
+              <div>
+                {/* Category & Vendor */}
+                <div className="flex items-center gap-2 text-sm mb-2">
+                  <Link href={`/shop?category=${product.category.toLowerCase()}`}>
+                    <a className="text-[#11248F] hover:underline">{product.category}</a>
+                  </Link>
+                  <span className="text-[#DADFE3]">|</span>
+                  <span className="text-[#7C818B]">Sold by: <span className="text-[#1D2128]">{product.vendor}</span></span>
+                </div>
+
+                {/* Product Name */}
+                <h1 className="text-2xl font-bold text-[#1D2128] mb-4">{product.name}</h1>
 
                 {/* Rating */}
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex items-center">
-                    {Array.from({ length: 5 }).map((_, i) => (
+                    {[1, 2, 3, 4, 5].map((star) => (
                       <Star
-                        key={i}
-                        className={`h-5 w-5 ${
-                          i < Math.floor(product.rating)
-                            ? "fill-yellow-400 text-yellow-400"
-                            : "fill-muted text-muted"
+                        key={star}
+                        className={`h-4 w-4 ${
+                          star <= Math.round(product.rating)
+                            ? "fill-[#FFA132] text-[#FFA132]"
+                            : "fill-[#DADFE3] text-[#DADFE3]"
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-[#7C818B]">
                     {product.rating} ({product.reviewCount} reviews)
                   </span>
                 </div>
 
                 {/* Price */}
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-4xl font-bold text-primary">${product.price.toFixed(2)}</span>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl font-bold text-[#D8125D]">${product.price.toFixed(2)}</span>
                   {product.oldPrice && (
-                    <>
-                      <span className="text-2xl text-muted-foreground line-through">
-                        ${product.oldPrice.toFixed(2)}
-                      </span>
-                      <span className="badge-sale">-{discount}%</span>
-                    </>
+                    <span className="text-xl text-[#7C818B] line-through">
+                      ${product.oldPrice.toFixed(2)}
+                    </span>
                   )}
                 </div>
 
                 {/* Stock Status */}
                 <div className="mb-6">
                   {product.inStock ? (
-                    <span className="text-sm font-medium text-green-600">In Stock</span>
+                    <span className="inline-flex items-center gap-1 text-sm text-green-600">
+                      <span className="w-2 h-2 bg-green-600 rounded-full"></span>
+                      In Stock
+                    </span>
                   ) : (
-                    <span className="text-sm font-medium text-destructive">Out of Stock</span>
+                    <span className="inline-flex items-center gap-1 text-sm text-[#D8125D]">
+                      <span className="w-2 h-2 bg-[#D8125D] rounded-full"></span>
+                      Out of Stock
+                    </span>
                   )}
                 </div>
 
-                <Separator className="my-6" />
-
                 {/* Description */}
-                <p className="text-muted-foreground mb-6">{product.description}</p>
+                <p className="text-sm text-[#7C818B] mb-6 leading-relaxed">{product.description}</p>
+
+                {/* Divider */}
+                <div className="border-t border-[#DADFE3] my-6"></div>
 
                 {/* Quantity Selector */}
                 <div className="flex items-center gap-4 mb-6">
-                  <span className="font-medium">Quantity:</span>
-                  <div className="flex items-center border rounded-full">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full"
+                  <span className="text-sm font-medium text-[#1D2128]">Quantity:</span>
+                  <div className="flex items-center border border-[#DADFE3] rounded-sm">
+                    <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-10 h-10 flex items-center justify-center text-[#7C818B] hover:bg-[#ECF0F4] transition-colors"
                     >
                       <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="w-12 text-center font-medium">{quantity}</span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full"
+                    </button>
+                    <span className="w-12 text-center font-medium text-[#1D2128]">{quantity}</span>
+                    <button
                       onClick={() => setQuantity(quantity + 1)}
+                      className="w-10 h-10 flex items-center justify-center text-[#7C818B] hover:bg-[#ECF0F4] transition-colors"
                     >
                       <Plus className="h-4 w-4" />
-                    </Button>
+                    </button>
                   </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                  <Button size="lg" className="flex-1 gap-2 rounded-full">
+                <div className="flex flex-col sm:flex-row gap-3 mb-6">
+                  <button
+                    onClick={handleAddToCart}
+                    className="flex-1 h-12 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
+                  >
                     <ShoppingCart className="h-5 w-5" />
                     Add to Cart
-                  </Button>
-                  <Button size="lg" variant="outline" className="gap-2 rounded-full">
+                  </button>
+                  <button
+                    onClick={handleAddToWishlist}
+                    className="h-12 px-6 border border-[#DADFE3] text-[#1D2128] text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#ECF0F4] transition-colors"
+                  >
                     <Heart className="h-5 w-5" />
                     Wishlist
-                  </Button>
+                  </button>
+                  <button
+                    onClick={() => toast.info("Compare feature coming soon")}
+                    className="h-12 w-12 border border-[#DADFE3] text-[#7C818B] rounded-sm flex items-center justify-center hover:bg-[#ECF0F4] transition-colors"
+                  >
+                    <GitCompare className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => toast.info("Share feature coming soon")}
+                    className="h-12 w-12 border border-[#DADFE3] text-[#7C818B] rounded-sm flex items-center justify-center hover:bg-[#ECF0F4] transition-colors"
+                  >
+                    <Share2 className="h-5 w-5" />
+                  </button>
                 </div>
 
                 {/* Features */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <Card>
-                    <CardContent className="p-4 flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="text-sm font-medium">Free Shipping</p>
-                        <p className="text-xs text-muted-foreground">On orders over $50</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-4 flex items-center gap-3">
-                      <RotateCcw className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="text-sm font-medium">30 Days Return</p>
-                        <p className="text-xs text-muted-foreground">Money back guarantee</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-4 flex items-center gap-3">
-                      <Shield className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="text-sm font-medium">Secure Payment</p>
-                        <p className="text-xs text-muted-foreground">100% protected</p>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div className="flex items-center gap-3 p-3 bg-[#ECF0F4] rounded-sm">
+                    <Truck className="h-5 w-5 text-[#11248F]" />
+                    <div>
+                      <p className="text-xs font-medium text-[#1D2128]">Free Shipping</p>
+                      <p className="text-xs text-[#7C818B]">On orders over $50</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-[#ECF0F4] rounded-sm">
+                    <RotateCcw className="h-5 w-5 text-[#11248F]" />
+                    <div>
+                      <p className="text-xs font-medium text-[#1D2128]">30 Days Return</p>
+                      <p className="text-xs text-[#7C818B]">Money back guarantee</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-[#ECF0F4] rounded-sm">
+                    <Shield className="h-5 w-5 text-[#11248F]" />
+                    <div>
+                      <p className="text-xs font-medium text-[#1D2128]">Secure Payment</p>
+                      <p className="text-xs text-[#7C818B]">100% protected</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* SKU */}
+                <div className="mt-6 pt-6 border-t border-[#DADFE3]">
+                  <p className="text-sm text-[#7C818B]">
+                    SKU: <span className="text-[#1D2128]">{product.sku}</span>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Tabs: Specifications & Reviews */}
-          <Tabs defaultValue="specifications" className="mb-12">
-            <TabsList className="w-full justify-start border-b rounded-none h-auto p-0 bg-transparent">
-              <TabsTrigger
-                value="specifications"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
-              >
-                Specifications
-              </TabsTrigger>
-              <TabsTrigger
-                value="reviews"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
-              >
-                Reviews ({product.reviewCount})
-              </TabsTrigger>
-            </TabsList>
+          <div className="bg-white rounded-sm">
+            <Tabs defaultValue="specifications">
+              <TabsList className="w-full justify-start border-b border-[#DADFE3] rounded-none h-auto p-0 bg-transparent">
+                <TabsTrigger
+                  value="specifications"
+                  className="px-6 py-4 rounded-none border-b-2 border-transparent text-sm font-medium text-[#7C818B] data-[state=active]:border-[#11248F] data-[state=active]:text-[#11248F] data-[state=active]:bg-transparent"
+                >
+                  Specifications
+                </TabsTrigger>
+                <TabsTrigger
+                  value="reviews"
+                  className="px-6 py-4 rounded-none border-b-2 border-transparent text-sm font-medium text-[#7C818B] data-[state=active]:border-[#11248F] data-[state=active]:text-[#11248F] data-[state=active]:bg-transparent"
+                >
+                  Reviews ({product.reviewCount})
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="specifications" className="mt-6">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {product.specifications.map((spec, index) => (
-                      <div key={index} className="flex border-b pb-3">
-                        <span className="font-medium w-1/3">{spec.label}:</span>
-                        <span className="text-muted-foreground w-2/3">{spec.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+              <TabsContent value="specifications" className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {product.specifications.map((spec, index) => (
+                    <div key={index} className="flex py-3 border-b border-[#ECF0F4]">
+                      <span className="text-sm font-medium text-[#1D2128] w-1/3">{spec.label}</span>
+                      <span className="text-sm text-[#7C818B] w-2/3">{spec.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
 
-            <TabsContent value="reviews" className="mt-6">
-              <div className="space-y-6">
-                {reviews.map((review) => (
-                  <Card key={review.id}>
-                    <CardContent className="p-6">
+              <TabsContent value="reviews" className="p-6">
+                <div className="space-y-6">
+                  {reviews.map((review) => (
+                    <div key={review.id} className="pb-6 border-b border-[#ECF0F4] last:border-0">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <p className="font-semibold">{review.author}</p>
-                          <p className="text-sm text-muted-foreground">{review.date}</p>
+                          <p className="text-sm font-semibold text-[#1D2128]">{review.author}</p>
+                          <p className="text-xs text-[#7C818B]">{review.date}</p>
                         </div>
                         <div className="flex items-center">
-                          {Array.from({ length: 5 }).map((_, i) => (
+                          {[1, 2, 3, 4, 5].map((star) => (
                             <Star
-                              key={i}
+                              key={star}
                               className={`h-4 w-4 ${
-                                i < review.rating ? "fill-yellow-400 text-yellow-400" : "fill-muted text-muted"
+                                star <= review.rating
+                                  ? "fill-[#FFA132] text-[#FFA132]"
+                                  : "fill-[#DADFE3] text-[#DADFE3]"
                               }`}
                             />
                           ))}
                         </div>
                       </div>
-                      <p className="text-muted-foreground">{review.comment}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+                      <p className="text-sm text-[#7C818B] mb-3">{review.comment}</p>
+                      <button className="text-xs text-[#7C818B] hover:text-[#11248F]">
+                        Helpful ({review.helpful})
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </main>
 

@@ -2,11 +2,9 @@ import { useState } from "react";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { Minus, Plus, X, ChevronRight, ShoppingBag } from "lucide-react";
+import { Minus, Plus, X, ChevronRight, ShoppingBag, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface CartItem {
   id: string;
@@ -35,6 +33,14 @@ export default function Cart() {
       quantity: 2,
       vendor: "Casual",
     },
+    {
+      id: "3",
+      name: "Galaxy Watch Active 2 Aluminum Smart Watch",
+      price: 249.0,
+      image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=200&h=200&fit=crop",
+      quantity: 1,
+      vendor: "Truffles",
+    },
   ]);
 
   const [couponCode, setCouponCode] = useState("");
@@ -48,6 +54,18 @@ export default function Cart() {
 
   const removeItem = (id: string) => {
     setCartItems((items) => items.filter((item) => item.id !== id));
+    toast.success("Item removed from cart");
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    toast.success("Cart cleared");
+  };
+
+  const applyCoupon = () => {
+    if (couponCode.trim()) {
+      toast.info("Coupon feature coming soon");
+    }
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -56,198 +74,228 @@ export default function Cart() {
   const total = subtotal + shipping + tax;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#ECF0F4]">
       <Header />
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="border-b">
-          <div className="container py-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="bg-white border-b border-[#DADFE3]">
+          <div className="container py-3">
+            <div className="flex items-center gap-2 text-sm">
               <Link href="/">
-                <a className="hover:text-foreground">Home</a>
+                <a className="text-[#7C818B] hover:text-[#11248F]">Home</a>
               </Link>
-              <ChevronRight className="h-4 w-4" />
-              <span className="text-foreground font-medium">Shopping Cart</span>
+              <ChevronRight className="h-4 w-4 text-[#DADFE3]" />
+              <span className="text-[#1D2128] font-medium">Shopping Cart</span>
             </div>
           </div>
         </div>
 
-        <div className="container py-8">
+        <div className="container py-6">
           {cartItems.length === 0 ? (
-            <div className="text-center py-16">
-              <ShoppingBag className="h-24 w-24 mx-auto text-muted-foreground/30 mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
-              <p className="text-muted-foreground mb-6">Add some products to get started</p>
+            <div className="bg-white rounded-sm p-12 text-center">
+              <ShoppingBag className="h-20 w-20 mx-auto text-[#DADFE3] mb-4" />
+              <h2 className="text-xl font-bold text-[#1D2128] mb-2">Your cart is empty</h2>
+              <p className="text-sm text-[#7C818B] mb-6">Add some products to get started</p>
               <Link href="/shop">
-                <a>
-                  <Button size="lg" className="rounded-full">
-                    Continue Shopping
-                  </Button>
+                <a className="inline-flex items-center justify-center h-12 px-8 bg-[#11248F] text-white text-sm font-medium rounded-sm hover:bg-[#0d1c6e] transition-colors">
+                  Continue Shopping
                 </a>
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
-                <h1 className="text-2xl font-bold mb-6">Shopping Cart ({cartItems.length} items)</h1>
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-sm">
+                  {/* Header */}
+                  <div className="flex items-center justify-between p-4 border-b border-[#DADFE3]">
+                    <h1 className="text-lg font-bold text-[#1D2128]">
+                      Shopping Cart ({cartItems.length} {cartItems.length === 1 ? "item" : "items"})
+                    </h1>
+                    <button
+                      onClick={clearCart}
+                      className="flex items-center gap-1 text-sm text-[#7C818B] hover:text-[#D8125D] transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Clear Cart
+                    </button>
+                  </div>
 
-                {cartItems.map((item) => (
-                  <Card key={item.id}>
-                    <CardContent className="p-4">
-                      <div className="flex gap-4">
-                        {/* Product Image */}
-                        <Link href={`/product/${item.id}`}>
-                          <a>
-                            <div className="w-24 h-24 rounded-lg overflow-hidden bg-muted/30 flex-shrink-0">
+                  {/* Table Header - Desktop */}
+                  <div className="hidden md:grid grid-cols-12 gap-4 px-4 py-3 border-b border-[#DADFE3] text-xs font-medium text-[#7C818B] uppercase">
+                    <div className="col-span-6">Product</div>
+                    <div className="col-span-2 text-center">Price</div>
+                    <div className="col-span-2 text-center">Quantity</div>
+                    <div className="col-span-2 text-right">Total</div>
+                  </div>
+
+                  {/* Cart Items */}
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="p-4 border-b border-[#ECF0F4] last:border-0">
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                        {/* Product */}
+                        <div className="md:col-span-6 flex gap-4">
+                          <Link href={`/product/${item.id}`}>
+                            <a className="w-20 h-20 bg-[#F5F5F7] rounded-sm overflow-hidden flex-shrink-0">
                               <img
                                 src={item.image}
                                 alt={item.name}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain p-2"
                               />
-                            </div>
-                          </a>
-                        </Link>
-
-                        {/* Product Info */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex justify-between gap-4 mb-2">
-                            <div className="flex-1">
-                              <Link href={`/product/${item.id}`}>
-                                <a>
-                                  <h3 className="font-medium hover:text-primary line-clamp-2">
-                                    {item.name}
-                                  </h3>
-                                </a>
-                              </Link>
-                              <p className="text-sm text-muted-foreground mt-1">
-                                Sold by {item.vendor}
-                              </p>
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="flex-shrink-0"
+                            </a>
+                          </Link>
+                          <div className="flex-1 min-w-0">
+                            <Link href={`/product/${item.id}`}>
+                              <a className="text-sm font-medium text-[#1D2128] hover:text-[#11248F] line-clamp-2">
+                                {item.name}
+                              </a>
+                            </Link>
+                            <p className="text-xs text-[#7C818B] mt-1">Sold by {item.vendor}</p>
+                            <button
                               onClick={() => removeItem(item.id)}
+                              className="md:hidden flex items-center gap-1 text-xs text-[#D8125D] mt-2"
                             >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-
-                          <div className="flex items-center justify-between mt-4">
-                            {/* Quantity Controls */}
-                            <div className="flex items-center border rounded-full">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 rounded-full"
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              >
-                                <Minus className="h-3 w-3" />
-                              </Button>
-                              <span className="w-12 text-center text-sm font-medium">
-                                {item.quantity}
-                              </span>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 rounded-full"
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              >
-                                <Plus className="h-3 w-3" />
-                              </Button>
-                            </div>
-
-                            {/* Price */}
-                            <div className="text-right">
-                              <p className="text-lg font-semibold text-primary">
-                                ${(item.price * item.quantity).toFixed(2)}
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                ${item.price.toFixed(2)} each
-                              </p>
-                            </div>
+                              <X className="w-3 h-3" />
+                              Remove
+                            </button>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
 
-                {/* Continue Shopping */}
-                <Link href="/shop">
-                  <a>
-                    <Button variant="outline" className="w-full rounded-full">
-                      Continue Shopping
-                    </Button>
-                  </a>
-                </Link>
+                        {/* Price */}
+                        <div className="md:col-span-2 text-center">
+                          <span className="md:hidden text-xs text-[#7C818B] mr-2">Price:</span>
+                          <span className="text-sm font-medium text-[#1D2128]">${item.price.toFixed(2)}</span>
+                        </div>
+
+                        {/* Quantity */}
+                        <div className="md:col-span-2 flex justify-center">
+                          <div className="flex items-center border border-[#DADFE3] rounded-sm">
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="w-8 h-8 flex items-center justify-center text-[#7C818B] hover:bg-[#ECF0F4] transition-colors"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </button>
+                            <span className="w-10 text-center text-sm font-medium text-[#1D2128]">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="w-8 h-8 flex items-center justify-center text-[#7C818B] hover:bg-[#ECF0F4] transition-colors"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Total */}
+                        <div className="md:col-span-2 flex items-center justify-between md:justify-end gap-4">
+                          <span className="text-sm font-semibold text-[#1D2128]">
+                            ${(item.price * item.quantity).toFixed(2)}
+                          </span>
+                          <button
+                            onClick={() => removeItem(item.id)}
+                            className="hidden md:flex w-8 h-8 items-center justify-center text-[#7C818B] hover:text-[#D8125D] hover:bg-[#FFF5F5] rounded-sm transition-colors"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Continue Shopping */}
+                  <div className="p-4">
+                    <Link href="/shop">
+                      <a className="inline-flex items-center gap-2 text-sm text-[#11248F] hover:underline">
+                        <ChevronRight className="w-4 h-4 rotate-180" />
+                        Continue Shopping
+                      </a>
+                    </Link>
+                  </div>
+                </div>
               </div>
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
-                <Card className="sticky top-24">
-                  <CardContent className="p-6">
-                    <h2 className="text-xl font-bold mb-6">Order Summary</h2>
+                <div className="bg-white rounded-sm p-6 sticky top-[120px]">
+                  <h2 className="text-lg font-bold text-[#1D2128] mb-6">Order Summary</h2>
 
-                    <div className="space-y-4 mb-6">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Subtotal</span>
-                        <span className="font-medium">${subtotal.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Shipping</span>
-                        <span className="font-medium">
-                          {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Tax (10%)</span>
-                        <span className="font-medium">${tax.toFixed(2)}</span>
-                      </div>
-
-                      <Separator />
-
-                      <div className="flex justify-between text-lg font-bold">
-                        <span>Total</span>
-                        <span className="text-primary">${total.toFixed(2)}</span>
-                      </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#7C818B]">Subtotal</span>
+                      <span className="font-medium text-[#1D2128]">${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#7C818B]">Shipping</span>
+                      <span className="font-medium text-[#1D2128]">
+                        {shipping === 0 ? (
+                          <span className="text-green-600">Free</span>
+                        ) : (
+                          `$${shipping.toFixed(2)}`
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#7C818B]">Tax (10%)</span>
+                      <span className="font-medium text-[#1D2128]">${tax.toFixed(2)}</span>
                     </div>
 
-                    {/* Coupon Code */}
-                    <div className="mb-6">
-                      <label className="text-sm font-medium mb-2 block">Coupon Code</label>
-                      <div className="flex gap-2">
-                        <Input
-                          placeholder="Enter code"
-                          value={couponCode}
-                          onChange={(e) => setCouponCode(e.target.value)}
-                          className="rounded-full"
-                        />
-                        <Button variant="outline" className="rounded-full">
-                          Apply
-                        </Button>
+                    <div className="border-t border-[#DADFE3] pt-3">
+                      <div className="flex justify-between">
+                        <span className="text-base font-bold text-[#1D2128]">Total</span>
+                        <span className="text-xl font-bold text-[#D8125D]">${total.toFixed(2)}</span>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Checkout Button */}
-                    <Link href="/checkout">
-                      <a>
-                        <Button size="lg" className="w-full rounded-full">
-                          Proceed to Checkout
-                        </Button>
-                      </a>
-                    </Link>
+                  {/* Coupon Code */}
+                  <div className="mb-6">
+                    <label className="text-sm font-medium text-[#1D2128] mb-2 block">Coupon Code</label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter code"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value)}
+                        className="h-10 border-[#DADFE3] text-sm focus-visible:ring-[#11248F]"
+                      />
+                      <button
+                        onClick={applyCoupon}
+                        className="h-10 px-4 border border-[#DADFE3] text-sm font-medium text-[#1D2128] rounded-sm hover:bg-[#ECF0F4] transition-colors"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
 
-                    {/* Free Shipping Notice */}
-                    {subtotal < 50 && (
-                      <p className="text-xs text-center text-muted-foreground mt-4">
-                        Add ${(50 - subtotal).toFixed(2)} more to get free shipping
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                  {/* Checkout Button */}
+                  <button
+                    onClick={() => toast.info("Checkout feature coming soon")}
+                    className="w-full h-12 bg-[#11248F] text-white text-sm font-medium rounded-sm hover:bg-[#0d1c6e] transition-colors"
+                  >
+                    Proceed to Checkout
+                  </button>
+
+                  {/* Free Shipping Notice */}
+                  {subtotal < 50 && (
+                    <p className="text-xs text-center text-[#7C818B] mt-4">
+                      Add <span className="font-medium text-[#D8125D]">${(50 - subtotal).toFixed(2)}</span> more to get free shipping
+                    </p>
+                  )}
+
+                  {/* Secure Payment */}
+                  <div className="mt-6 pt-4 border-t border-[#DADFE3]">
+                    <p className="text-xs text-center text-[#7C818B]">
+                      Secure checkout powered by Stripe
+                    </p>
+                    <div className="flex items-center justify-center gap-2 mt-2">
+                      <span className="px-2 py-1 bg-[#ECF0F4] text-xs text-[#1D2128] rounded">VISA</span>
+                      <span className="px-2 py-1 bg-[#ECF0F4] text-xs text-[#1D2128] rounded">MC</span>
+                      <span className="px-2 py-1 bg-[#ECF0F4] text-xs text-[#1D2128] rounded">PayPal</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
