@@ -399,6 +399,35 @@ export default function Header() {
                     <span className="text-[15px]">Help Center</span>
                   </a>
                 </Link>
+
+                <div className="border-t border-gray-200 my-2"></div>
+
+                <Link href="/about">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <span className="text-[15px]">About Us</span>
+                  </a>
+                </Link>
+
+                <Link href="/contact">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <span className="text-[15px]">Contact Us</span>
+                  </a>
+                </Link>
+
+                <Link href="/careers">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <span className="text-[15px]">Careers</span>
+                  </a>
+                </Link>
               </nav>
             </div>
           </div>
