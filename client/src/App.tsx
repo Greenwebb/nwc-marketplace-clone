@@ -5,6 +5,10 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { BottomNav } from "./components/BottomNav";
+import { RoleSelection } from "./components/RoleSelection";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { useAuth } from "./hooks/useAuth";
+import { useState } from "react";
 // Public Marketplace Pages
 import Home from "./pages/(public)/Home";
 import Shop from "./pages/(public)/Shop";
@@ -25,14 +29,37 @@ import Legal from "./pages/Legal";
 import SiteMap from "./pages/SiteMap";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
+  const { user, isLoading } = useAuth();
+  const [showRoleSelection, setShowRoleSelection] = useState(false);
+
+  // Show role selection if user is authenticated but has no role set (shouldn't happen with default)
+  // or if they explicitly navigate to /select-role
+  if (user && !isLoading && !user.role) {
+    return <RoleSelection onComplete={() => setShowRoleSelection(false)} />;
+  }
+
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path="/shop" component={Shop} />
       <Route path="/product/:id" component={ProductDetail} />
-      <Route path="/cart" component={Cart} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/cart">
+        <ProtectedRoute requireAuth>
+          <Cart />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/dashboard">
+        <ProtectedRoute requiredRole="customer">
+          <Dashboard />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/select-role">
+        {user ? (
+          <RoleSelection onComplete={() => window.location.href = '/'} />
+        ) : (
+          <Home />
+        )}
+      </Route>
       <Route path="/contact" component={Contact} />
       <Route path="/careers" component={Careers} />
       <Route path="/about" component={About} />

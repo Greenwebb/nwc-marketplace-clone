@@ -43,3 +43,45 @@ export const adminProcedure = t.procedure.use(
     });
   }),
 );
+
+export const customerProcedure = t.procedure.use(
+  t.middleware(async opts => {
+    const { ctx, next } = opts;
+
+    if (!ctx.user) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
+    }
+
+    if (ctx.user.role !== 'customer' && ctx.user.role !== 'admin') {
+      throw new TRPCError({ code: "FORBIDDEN", message: "This action is only available to customers" });
+    }
+
+    return next({
+      ctx: {
+        ...ctx,
+        user: ctx.user,
+      },
+    });
+  }),
+);
+
+export const vendorProcedure = t.procedure.use(
+  t.middleware(async opts => {
+    const { ctx, next } = opts;
+
+    if (!ctx.user) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
+    }
+
+    if (ctx.user.role !== 'vendor' && ctx.user.role !== 'admin') {
+      throw new TRPCError({ code: "FORBIDDEN", message: "This action is only available to vendors" });
+    }
+
+    return next({
+      ctx: {
+        ...ctx,
+        user: ctx.user,
+      },
+    });
+  }),
+);

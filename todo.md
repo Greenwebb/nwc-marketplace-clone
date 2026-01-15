@@ -485,3 +485,27 @@
 - [x] Test all pages after restructuring
 - [x] Verify all routes still work correctly
 - [x] Document the new file structure
+
+## Role-Based Access Control Implementation (User Request)
+- [x] Analyze current user schema and authentication system
+- [x] Update user schema to include role field (customer, vendor)
+- [x] Create customerProcedure middleware for customer-only routes
+- [x] Create vendorProcedure middleware for vendor-only routes
+- [x] Add role assignment during user registration (updateRole mutation)
+- [x] Create frontend ProtectedRoute component with role checking
+- [x] Update customer routes to use role-based protection
+- [x] Create RoleSelection component for onboarding
+- [x] Add /select-role route for role selection
+- [x] Create useAuth hook for authentication state
+- [ ] Update vendor routes to use role-based protection (when vendor pages exist)
+- [x] Test customer role access and restrictions
+- [x] Test vendor role access and restrictions
+- [x] Write vitest tests for RBAC middleware
+
+## Add Missing Provider Types (User Request)
+- [ ] Identify all missing provider types in the application
+- [ ] Add payment method providers (credit card, PayPal, etc.)
+- [ ] Add shipping providers (FedEx, UPS, DHL, etc.)
+- [ ] Add authentication providers (if needed beyond OAuth)
+- [ ] Update relevant schemas and types
+- [ ] Test all provider integrations
