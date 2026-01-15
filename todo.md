@@ -272,3 +272,9 @@
 ## Wishlist Badge Positioning Fix (User Report)
 - [x] Fix wishlist heart icon badge positioning to match cart icon badge
 - [x] Ensure badge is positioned at top-right corner of icon, not floating away
+
+## Poppins Font Not Applied Globally (User Report)
+- [x] Verify Poppins import in index.html
+- [x] Check font-family declaration in index.css
+- [x] Ensure font is applied to body and all elements
+- [x] Test font rendering across all pages
