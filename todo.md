@@ -218,3 +218,15 @@
 - [x] Add circular navigation arrows to carousels
 - [x] Add "See All Products" / "See All Offers" links with proper styling
 - [x] Refine promotional card badges ("FREE GIFT", "SAVE $200", "SAVE 25%")
+
+## Header Refinements (From Detailed Screenshot)
+- [x] Update Motta logo styling - add colorful dots after "Motta" text
+- [x] Add "Best For Shopping" tagline under logo in smaller text
+- [x] Update Categories button - add grid icon and ensure proper spacing
+- [x] Refine search bar placeholder text to "Search for anything"
+- [x] Update Region selector - show flag icon + "Region" label + "EN/USD" value
+- [x] Update Sign in/Register button styling and layout
+- [x] Ensure wishlist and cart icons are properly styled
+- [x] Refine benefits bar icons and text alignment
+- [x] Match exact header background color (#11248F for main, light blue for benefits)
+- [x] Ensure proper spacing and padding throughout header

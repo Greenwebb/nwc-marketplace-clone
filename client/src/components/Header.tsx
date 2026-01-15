@@ -83,11 +83,19 @@ export default function Header() {
 
               {/* Logo */}
               <Link href="/">
-                <a className="flex items-center gap-1">
-                  <span className="text-white text-[30px] font-bold tracking-tight">
-                    Motta
-                  </span>
-                  <span className="w-2 h-2 rounded-full bg-[#FFA132] mb-4"></span>
+                <a className="flex flex-col">
+                  <div className="flex items-center gap-1">
+                    <span className="text-white text-[30px] font-bold tracking-tight leading-none">
+                      Motta
+                    </span>
+                    <div className="flex gap-0.5 mb-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B9D]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FFA132]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#4CAF50]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2196F3]"></span>
+                    </div>
+                  </div>
+                  <span className="text-white/60 text-[10px] tracking-wide leading-none">Best For Shopping</span>
                 </a>
               </Link>
 
@@ -141,23 +149,21 @@ export default function Header() {
             <div className="flex items-center gap-1 md:gap-2">
               {/* Region Selector - Desktop */}
               <button className="hidden xl:flex items-center gap-2 px-3 py-2 text-white hover:bg-white/10 rounded-sm transition-colors">
-                <Globe className="h-4 w-4" />
-                <span className="text-sm">
-                  <span className="text-white/60">Region</span>
-                  <br />
-                  <span className="font-medium">EN/USD</span>
-                </span>
+                <span className="text-lg">🇬🇧</span>
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="text-[11px] text-white/60">Region</span>
+                  <span className="text-sm font-medium">EN/ USD</span>
+                </div>
               </button>
 
               {/* Account */}
               <Link href="/dashboard">
                 <a className="hidden lg:flex items-center gap-2 px-3 py-2 text-white hover:bg-white/10 rounded-sm transition-colors">
                   <User className="h-5 w-5" />
-                  <span className="text-sm">
-                    <span className="text-white/60">Welcome</span>
-                    <br />
-                    <span className="font-medium">Sign in / Register</span>
-                  </span>
+                  <div className="flex flex-col items-start leading-tight">
+                    <span className="text-[11px] text-white/60">Welcome</span>
+                    <span className="text-sm font-medium">Sign in / Register</span>
+                  </div>
                 </a>
               </Link>
 
