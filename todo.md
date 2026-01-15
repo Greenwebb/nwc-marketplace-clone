@@ -302,3 +302,18 @@
 - [x] Update Add to Cart section styling
 - [x] Ensure responsive design for mobile, tablet, and desktop
 - [x] Test all interactions and layouts
+
+## Product Detail Page Layout Fixes (User Request - Screenshot Comparison)
+- [x] Analyze mobile and desktop screenshots from original Motta site
+- [x] Document all missing layout elements and differences
+- [x] Fix desktop layout: image gallery positioning and size
+- [x] Fix desktop layout: product info section alignment
+- [x] Fix desktop layout: tabs section styling
+- [x] Fix mobile layout: image gallery display with dots navigation
+- [x] Fix mobile layout: action buttons styling
+- [x] Fix mobile layout: tabs accordion behavior
+- [x] Add zoom icon to main product image
+- [x] Add "Ask a Question" button with proper icon
+- [x] Fix store card layout and styling with yellow badge
+- [x] Add benefits section at bottom (4 benefit cards)
+- [x] Ensure all responsive breakpoints match original

@@ -3,7 +3,8 @@ import { Link, useParams } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Heart, ShoppingCart, Truck, RotateCcw, Shield, ChevronRight, Minus, Plus, Share2, GitCompare, Facebook, Twitter, Mail, MessageCircle } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Star, Heart, ShoppingCart, Truck, RotateCcw, Shield, ChevronRight, ChevronDown, Minus, Plus, Share2, GitCompare, Facebook, Twitter, Mail, MessageCircle, ZoomIn, Headphones } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ProductDetail() {
@@ -11,6 +12,7 @@ export default function ProductDetail() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const [openSections, setOpenSections] = useState<string[]>(["description"]);
 
   // Check scroll position for sticky bar
   useEffect(() => {
@@ -21,6 +23,14 @@ export default function ProductDetail() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleSection = (section: string) => {
+    setOpenSections((prev) =>
+      prev.includes(section)
+        ? prev.filter((s) => s !== section)
+        : [...prev, section]
+    );
+  };
 
   // Mock product data
   const product = {
@@ -99,6 +109,29 @@ export default function ProductDetail() {
     },
   ];
 
+  const benefits = [
+    {
+      icon: Truck,
+      title: "Worldwide Delivery",
+      description: "200 countries and regions worldwide",
+    },
+    {
+      icon: Shield,
+      title: "Secure Payment",
+      description: "Pay with popular and secure payment methods",
+    },
+    {
+      icon: RotateCcw,
+      title: "60-day Return Policy",
+      description: "Merchandise must be returned within 60 days",
+    },
+    {
+      icon: Headphones,
+      title: "24/7 Help Center",
+      description: "We'll respond to you within 24 hours",
+    },
+  ];
+
   const handleAddToCart = () => {
     toast.success("Added to cart!");
   };
@@ -129,9 +162,9 @@ export default function ProductDetail() {
         {/* Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Left Column - Image Gallery */}
-          <div className="flex gap-4">
-            {/* Thumbnail Strip */}
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-col-reverse md:flex-row gap-4">
+            {/* Thumbnail Strip - Hidden on mobile */}
+            <div className="hidden md:flex flex-col gap-2">
               {product.images.map((image, index) => (
                 <button
                   key={index}
@@ -158,9 +191,27 @@ export default function ProductDetail() {
                 alt={product.name}
                 className="w-full h-auto object-contain"
               />
+              {/* Zoom Icon */}
+              <button className="absolute bottom-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                <ZoomIn className="h-5 w-5 text-[#7C818B]" />
+              </button>
+              {/* Image Counter */}
               <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm text-[#7C818B] shadow-sm">
                 {selectedImage + 1}/{product.images.length}
               </div>
+            </div>
+
+            {/* Dots Navigation - Mobile only */}
+            <div className="flex md:hidden justify-center gap-2 mt-4">
+              {product.images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(index)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    selectedImage === index ? "bg-[#11248F]" : "bg-gray-300"
+                  }`}
+                />
+              ))}
             </div>
           </div>
 
@@ -174,12 +225,12 @@ export default function ProductDetail() {
             </Link>
 
             {/* Product Title */}
-            <h1 className="text-3xl font-bold text-[#1D2128] mb-3">
+            <h1 className="text-2xl md:text-3xl font-bold text-[#1D2128] mb-3">
               {product.name}
             </h1>
 
             {/* Rating & Reviews */}
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex flex-wrap items-center gap-4 mb-4">
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -200,8 +251,8 @@ export default function ProductDetail() {
               </button>
             </div>
 
-            {/* Social Share */}
-            <div className="flex items-center gap-2 mb-6">
+            {/* Social Share - Desktop only */}
+            <div className="hidden md:flex items-center gap-2 mb-6">
               <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                 <Facebook className="h-4 w-4 text-[#7C818B]" />
               </button>
@@ -219,11 +270,11 @@ export default function ProductDetail() {
             {/* Price */}
             <div className="mb-6">
               <div className="flex items-baseline gap-3 mb-2">
-                <span className="text-4xl font-bold text-[#1D2128]">
+                <span className="text-3xl md:text-4xl font-bold text-[#1D2128]">
                   ${product.price.toFixed(2)}
                 </span>
                 {product.oldPrice && (
-                  <span className="text-xl text-[#7C818B] line-through">
+                  <span className="text-lg md:text-xl text-[#7C818B] line-through">
                     ${product.oldPrice.toFixed(2)}
                   </span>
                 )}
@@ -235,44 +286,42 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Stock Status */}
+            {/* Quantity & Stock */}
             <div className="mb-6">
-              <span className="text-sm text-[#4CAF50] font-medium">
-                Available in stock
-              </span>
-            </div>
-
-            {/* Quantity Selector */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-[#1D2128] mb-2">
-                Quantity:
-              </label>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center border border-gray-300 rounded-sm">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-3 py-2 hover:bg-gray-100 transition-colors"
-                  >
-                    <Minus className="h-4 w-4" />
-                  </button>
-                  <input
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-16 text-center border-x border-gray-300 py-2 focus:outline-none"
-                  />
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-3 py-2 hover:bg-gray-100 transition-colors"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </button>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-3">
+                <div className="flex items-center gap-3">
+                  <label className="text-sm font-medium text-[#1D2128]">
+                    Quantity:
+                  </label>
+                  <div className="flex items-center border border-gray-300 rounded-sm">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                    >
+                      <Minus className="h-4 w-4" />
+                    </button>
+                    <input
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                      className="w-16 text-center border-x border-gray-300 py-2 focus:outline-none"
+                    />
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
+                <span className="text-sm text-[#4CAF50] font-medium">
+                  Available in stock
+                </span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3 mb-6">
+            <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <button
                 onClick={handleAddToCart}
                 className="flex-1 bg-[#11248F] text-white py-3 px-6 rounded-sm font-medium hover:bg-[#0D1A6F] transition-colors"
@@ -300,128 +349,260 @@ export default function ProductDetail() {
             </div>
 
             {/* Store Info */}
-            <div className="border border-gray-200 rounded-sm p-4 mb-6">
+            <div className="border border-gray-200 rounded-sm p-4 mb-4">
               <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-[#7C818B] mb-1">Store</div>
-                  <Link href={`/store/${product.vendor}`}>
-                    <a className="text-base font-medium text-[#1D2128] hover:text-[#11248F]">
-                      {product.vendor}
-                    </a>
-                  </Link>
-                  <div className="flex items-center gap-1 mt-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-3 w-3 fill-gray-200 text-gray-200"
-                      />
-                    ))}
-                    <span className="text-xs text-[#7C818B] ml-1">
-                      {product.vendorRating} out of 5
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#FFC107] rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">
+                      {product.vendor.charAt(0)}
                     </span>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#7C818B] mb-1">Store</div>
+                    <Link href={`/store/${product.vendor}`}>
+                      <a className="text-base font-medium text-[#1D2128] hover:text-[#11248F]">
+                        {product.vendor}
+                      </a>
+                    </Link>
+                    <div className="flex items-center gap-1 mt-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="h-3 w-3 fill-gray-200 text-gray-200"
+                        />
+                      ))}
+                      <span className="text-xs text-[#7C818B] ml-1">
+                        {product.vendorRating} out of 5
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Ask a Question */}
-            <button className="w-full bg-[#1D2128] text-white py-3 px-6 rounded-sm font-medium hover:bg-[#2D3138] transition-colors">
+            <button className="w-full bg-[#1D2128] text-white py-3 px-6 rounded-sm font-medium hover:bg-[#2D3138] transition-colors flex items-center justify-center gap-2">
+              <MessageCircle className="h-5 w-5" />
               Ask a Question
             </button>
           </div>
         </div>
 
-        {/* Tabs Section */}
-        <Tabs defaultValue="description" className="mb-12">
-          <TabsList className="w-full justify-start border-b border-gray-200 bg-transparent rounded-none h-auto p-0">
-            <TabsTrigger
-              value="description"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
-            >
-              Description
-            </TabsTrigger>
-            <TabsTrigger
-              value="reviews"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
-            >
-              Reviews ({product.reviewCount})
-            </TabsTrigger>
-            <TabsTrigger
-              value="offers"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
-            >
-              More Offers
-            </TabsTrigger>
-            <TabsTrigger
-              value="policies"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
-            >
-              Store Policies
-            </TabsTrigger>
-            <TabsTrigger
-              value="inquiries"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
-            >
-              Inquiries
-            </TabsTrigger>
-          </TabsList>
+        {/* Tabs Section - Desktop */}
+        <div className="hidden md:block mb-12">
+          <Tabs defaultValue="description">
+            <TabsList className="w-full justify-start border-b border-gray-200 bg-transparent rounded-none h-auto p-0">
+              <TabsTrigger
+                value="description"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
+              >
+                Description
+              </TabsTrigger>
+              <TabsTrigger
+                value="reviews"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
+              >
+                Reviews ({product.reviewCount})
+              </TabsTrigger>
+              <TabsTrigger
+                value="offers"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
+              >
+                More Offers
+              </TabsTrigger>
+              <TabsTrigger
+                value="policies"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
+              >
+                Store Policies
+              </TabsTrigger>
+              <TabsTrigger
+                value="inquiries"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#11248F] data-[state=active]:bg-transparent px-6 py-3"
+              >
+                Inquiries
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="description" className="py-6">
-            <div className="prose max-w-none">
-              <p className="text-[#1D2128] leading-relaxed">{product.description}</p>
-              
-              <h3 className="text-xl font-semibold text-[#1D2128] mt-6 mb-4">Specifications</h3>
+            <TabsContent value="description" className="py-6">
+              <div className="prose max-w-none">
+                <p className="text-[#1D2128] leading-relaxed">{product.description}</p>
+                
+                <h3 className="text-xl font-semibold text-[#1D2128] mt-6 mb-4">Specifications</h3>
+                <table className="w-full">
+                  <tbody>
+                    {product.specifications.map((spec, index) => (
+                      <tr key={index} className="border-b border-gray-200">
+                        <td className="py-3 text-[#7C818B] font-medium w-1/3">{spec.label}</td>
+                        <td className="py-3 text-[#1D2128]">{spec.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="reviews" className="py-6">
+              <div className="text-center py-12 text-[#7C818B]">
+                <p>No reviews yet. Be the first to review this product!</p>
+                <button className="mt-4 text-[#11248F] hover:underline">Write a Review</button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="offers" className="py-6">
+              <div className="text-center py-12 text-[#7C818B]">
+                <p>No additional offers available for this product.</p>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="policies" className="py-6">
+              <div className="prose max-w-none">
+                <h3 className="text-xl font-semibold text-[#1D2128] mb-4">Return Policy</h3>
+                <p className="text-[#1D2128] leading-relaxed mb-4">
+                  Items can be returned within 60 days of purchase. Products must be in original condition with all packaging.
+                </p>
+                
+                <h3 className="text-xl font-semibold text-[#1D2128] mb-4">Shipping Policy</h3>
+                <p className="text-[#1D2128] leading-relaxed">
+                  Free shipping on orders over $99. Standard delivery takes 3-5 business days.
+                </p>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="inquiries" className="py-6">
+              <div className="text-center py-12 text-[#7C818B]">
+                <p>Have a question? Click "Ask a Question" button above to contact the seller.</p>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Accordion Section - Mobile */}
+        <div className="md:hidden mb-12 space-y-4">
+          {/* Description */}
+          <Collapsible
+            open={openSections.includes("description")}
+            onOpenChange={() => toggleSection("description")}
+            className="border border-gray-200 rounded-sm"
+          >
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-4 hover:bg-gray-50">
+              <span className="font-semibold text-[#1D2128]">Description</span>
+              <ChevronDown
+                className={`h-5 w-5 text-[#7C818B] transition-transform ${
+                  openSections.includes("description") ? "rotate-180" : ""
+                }`}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-4 pb-4">
+              <p className="text-[#1D2128] leading-relaxed mb-4">{product.description}</p>
+              <h4 className="font-semibold text-[#1D2128] mb-2">Specifications</h4>
               <table className="w-full">
                 <tbody>
                   {product.specifications.map((spec, index) => (
                     <tr key={index} className="border-b border-gray-200">
-                      <td className="py-3 text-[#7C818B] font-medium w-1/3">{spec.label}</td>
-                      <td className="py-3 text-[#1D2128]">{spec.value}</td>
+                      <td className="py-2 text-sm text-[#7C818B] font-medium">{spec.label}</td>
+                      <td className="py-2 text-sm text-[#1D2128]">{spec.value}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-          </TabsContent>
+            </CollapsibleContent>
+          </Collapsible>
 
-          <TabsContent value="reviews" className="py-6">
-            <div className="text-center py-12 text-[#7C818B]">
-              <p>No reviews yet. Be the first to review this product!</p>
-              <button className="mt-4 text-[#11248F] hover:underline">Write a Review</button>
-            </div>
-          </TabsContent>
+          {/* Reviews */}
+          <Collapsible
+            open={openSections.includes("reviews")}
+            onOpenChange={() => toggleSection("reviews")}
+            className="border border-gray-200 rounded-sm"
+          >
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-4 hover:bg-gray-50">
+              <span className="font-semibold text-[#1D2128]">Reviews ({product.reviewCount})</span>
+              <ChevronDown
+                className={`h-5 w-5 text-[#7C818B] transition-transform ${
+                  openSections.includes("reviews") ? "rotate-180" : ""
+                }`}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-4 pb-4">
+              <div className="text-center py-6 text-[#7C818B]">
+                <p className="text-sm">No reviews yet. Be the first to review this product!</p>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-          <TabsContent value="offers" className="py-6">
-            <div className="text-center py-12 text-[#7C818B]">
-              <p>No additional offers available for this product.</p>
-            </div>
-          </TabsContent>
+          {/* More Offers */}
+          <Collapsible
+            open={openSections.includes("offers")}
+            onOpenChange={() => toggleSection("offers")}
+            className="border border-gray-200 rounded-sm"
+          >
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-4 hover:bg-gray-50">
+              <span className="font-semibold text-[#1D2128]">More Offers</span>
+              <ChevronDown
+                className={`h-5 w-5 text-[#7C818B] transition-transform ${
+                  openSections.includes("offers") ? "rotate-180" : ""
+                }`}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-4 pb-4">
+              <div className="text-center py-6 text-[#7C818B]">
+                <p className="text-sm">No additional offers available for this product.</p>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-          <TabsContent value="policies" className="py-6">
-            <div className="prose max-w-none">
-              <h3 className="text-xl font-semibold text-[#1D2128] mb-4">Return Policy</h3>
-              <p className="text-[#1D2128] leading-relaxed mb-4">
+          {/* Store Policies */}
+          <Collapsible
+            open={openSections.includes("policies")}
+            onOpenChange={() => toggleSection("policies")}
+            className="border border-gray-200 rounded-sm"
+          >
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-4 hover:bg-gray-50">
+              <span className="font-semibold text-[#1D2128]">Store Policies</span>
+              <ChevronDown
+                className={`h-5 w-5 text-[#7C818B] transition-transform ${
+                  openSections.includes("policies") ? "rotate-180" : ""
+                }`}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-4 pb-4">
+              <h4 className="font-semibold text-[#1D2128] mb-2">Return Policy</h4>
+              <p className="text-sm text-[#1D2128] leading-relaxed mb-3">
                 Items can be returned within 60 days of purchase. Products must be in original condition with all packaging.
               </p>
-              
-              <h3 className="text-xl font-semibold text-[#1D2128] mb-4">Shipping Policy</h3>
-              <p className="text-[#1D2128] leading-relaxed">
+              <h4 className="font-semibold text-[#1D2128] mb-2">Shipping Policy</h4>
+              <p className="text-sm text-[#1D2128] leading-relaxed">
                 Free shipping on orders over $99. Standard delivery takes 3-5 business days.
               </p>
-            </div>
-          </TabsContent>
+            </CollapsibleContent>
+          </Collapsible>
 
-          <TabsContent value="inquiries" className="py-6">
-            <div className="text-center py-12 text-[#7C818B]">
-              <p>Have a question? Click "Ask a Question" button above to contact the seller.</p>
-            </div>
-          </TabsContent>
-        </Tabs>
+          {/* Inquiries */}
+          <Collapsible
+            open={openSections.includes("inquiries")}
+            onOpenChange={() => toggleSection("inquiries")}
+            className="border border-gray-200 rounded-sm"
+          >
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-4 hover:bg-gray-50">
+              <span className="font-semibold text-[#1D2128]">Inquiries</span>
+              <ChevronDown
+                className={`h-5 w-5 text-[#7C818B] transition-transform ${
+                  openSections.includes("inquiries") ? "rotate-180" : ""
+                }`}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-4 pb-4">
+              <div className="text-center py-6 text-[#7C818B]">
+                <p className="text-sm">Have a question? Click "Ask a Question" button above to contact the seller.</p>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
 
         {/* Similar Products */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-[#1D2128] mb-6">Similar Products</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {similarProducts.map((item) => (
               <Link key={item.id} href={`/product/${item.id}`}>
                 <a className="group">
@@ -438,7 +619,7 @@ export default function ProductDetail() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="p-4">
+                    <div className="p-3 md:p-4">
                       {item.colors && (
                         <div className="text-xs text-[#7C818B] mb-1">{item.colors} color</div>
                       )}
@@ -459,7 +640,7 @@ export default function ProductDetail() {
                         <span className="text-xs text-[#7C818B]">({item.reviewCount})</span>
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-lg font-bold text-[#1D2128]">
+                        <span className="text-base md:text-lg font-bold text-[#1D2128]">
                           ${item.price.toFixed(2)}
                         </span>
                         {item.oldPrice && (
@@ -475,6 +656,26 @@ export default function ProductDetail() {
               </Link>
             ))}
           </div>
+        </div>
+
+        {/* Benefits Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 py-8 border-t border-gray-200">
+          {benefits.map((benefit, index) => {
+            const Icon = benefit.icon;
+            return (
+              <div key={index} className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 mb-3 flex items-center justify-center">
+                  <Icon className="h-8 w-8 md:h-12 md:w-12 text-[#7C818B]" />
+                </div>
+                <h3 className="text-sm md:text-base font-semibold text-[#1D2128] mb-1">
+                  {benefit.title}
+                </h3>
+                <p className="text-xs md:text-sm text-[#7C818B]">
+                  {benefit.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </main>
 
