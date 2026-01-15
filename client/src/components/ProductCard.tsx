@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { Link } from "wouter";
-import { Heart, ShoppingCart, GitCompare, Star } from "lucide-react";
+import { Heart, GitCompare, Star } from "lucide-react";
 import { toast } from "sonner";
 
 export interface Product {
@@ -16,6 +15,8 @@ export interface Product {
   reviewCount: number;
   badge?: "sale" | "hot" | "new";
   badgeText?: string;
+  colors?: number;
+  inStock?: boolean;
 }
 
 interface ProductCardProps {
@@ -23,14 +24,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toast.success(`${product.name} added to cart`);
-  };
-
   const handleAddToWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -40,162 +33,129 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleCompare = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toast.info("Compare feature coming soon");
+    toast.success(`${product.name} added to compare`);
   };
 
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
 
+  const inStock = product.inStock !== false;
+
   return (
     <Link href={`/product/${product.slug || product.id}`}>
-      <a
-        className="block group"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="relative bg-white rounded-sm overflow-hidden motta-card-hover">
-          {/* Image Container */}
-          <div className="relative aspect-square overflow-hidden bg-white">
+      <a className="block group">
+        <div className="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition-shadow">
+          {/* Image Container with Floating Buttons */}
+          <div className="relative aspect-square bg-gray-100">
+            {/* Product Image */}
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover"
             />
 
-            {/* Badge */}
-            {product.badge && (
-              <div className="absolute top-3 left-3">
-                {product.badge === "sale" && (
-                  <span className="motta-badge-sale">
-                    {product.badgeText || `-${discount}%`}
-                  </span>
-                )}
-                {product.badge === "hot" && (
-                  <span className="motta-badge-hot">
-                    {product.badgeText || "Hot"}
-                  </span>
-                )}
-                {product.badge === "new" && (
-                  <span className="motta-badge-new">
-                    {product.badgeText || "New"}
-                  </span>
-                )}
+            {/* Discount Badge - Top Left */}
+            {product.badge === "sale" && (
+              <span className="absolute top-2 left-2 bg-[#D8125D] text-white text-xs font-semibold px-2 py-1 rounded-sm">
+                {product.badgeText || `-${discount}%`}
+              </span>
+            )}
+
+            {/* Hot Badge - Top Left */}
+            {product.badge === "hot" && (
+              <span className="absolute top-2 left-2 bg-[#FF6B00] text-white text-xs font-semibold px-2 py-1 rounded-sm">
+                {product.badgeText || "Hot"}
+              </span>
+            )}
+
+            {/* New Badge - Top Left */}
+            {product.badge === "new" && (
+              <span className="absolute top-2 left-2 bg-[#4CAF50] text-white text-xs font-semibold px-2 py-1 rounded-sm">
+                {product.badgeText || "New"}
+              </span>
+            )}
+
+            {/* Out of Stock Badge - Top Center */}
+            {!inStock && (
+              <span className="absolute top-2 left-1/2 -translate-x-1/2 bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-sm">
+                Out Of Stock
+              </span>
+            )}
+
+            {/* Floating Action Buttons - Top Right */}
+            <div className="absolute top-2 right-2 flex flex-col gap-2">
+              <button
+                onClick={handleAddToWishlist}
+                className="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-[#11248F] hover:text-white transition-colors"
+                aria-label="Add to wishlist"
+              >
+                <Heart className="h-4 w-4" />
+              </button>
+              <button
+                onClick={handleCompare}
+                className="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-[#11248F] hover:text-white transition-colors"
+                aria-label="Add to compare"
+              >
+                <GitCompare className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Color Variants Indicator - Bottom Left */}
+            {product.colors && product.colors > 0 && (
+              <div className="absolute bottom-2 left-2 text-xs text-[#7C818B] bg-white px-2 py-1 rounded-sm shadow-sm">
+                {product.colors} Color{product.colors > 1 ? 's' : ''}
               </div>
             )}
           </div>
 
           {/* Product Info */}
-          <div className="p-3">
+          <div className="p-3 md:p-4">
             {/* Category */}
-            <span className="motta-category-label block mb-1">
+            <span className="text-xs text-[#7C818B] block mb-1">
               {product.category}
             </span>
 
-            {/* Product Name */}
-            <h3 className="motta-product-title line-clamp-2 mb-2 group-hover:text-[#11248F] transition-colors">
+            {/* Product Title */}
+            <h3 className="text-sm font-medium text-[#1D2128] mb-2 line-clamp-2 group-hover:text-[#11248F] transition-colors min-h-[2.5rem]">
               {product.name}
             </h3>
 
+            {/* Rating */}
+            <div className="flex items-center gap-1 mb-2">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-3 w-3 ${
+                    i < Math.floor(product.rating)
+                      ? "fill-[#FFA500] text-[#FFA500]"
+                      : "fill-gray-200 text-gray-200"
+                  }`}
+                />
+              ))}
+              <span className="text-xs text-[#7C818B] ml-1">({product.reviewCount})</span>
+            </div>
+
             {/* Price */}
-            <div className="flex items-center gap-2 mb-2">
-              <span className={`motta-price ${product.oldPrice ? "text-[#D8125D]" : ""}`}>
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-base md:text-lg font-bold text-[#1D2128]">
                 ${product.price.toFixed(2)}
               </span>
               {product.oldPrice && (
-                <span className="motta-price-old">
+                <span className="text-sm text-[#7C818B] line-through">
                   ${product.oldPrice.toFixed(2)}
                 </span>
               )}
             </div>
 
-            {/* Vendor with Icon */}
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-4 h-4 bg-[#11248F] rounded-full flex items-center justify-center">
-                <span className="text-[10px] text-white font-bold">{product.vendor.charAt(0).toUpperCase()}</span>
+            {/* Vendor */}
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-[#11248F] flex items-center justify-center">
+                <span className="text-white text-[10px] font-semibold">
+                  {product.vendor.charAt(0).toUpperCase()}
+                </span>
               </div>
-              <span className="motta-vendor">{product.vendor}</span>
-            </div>
-
-            {/* Rating - Always Visible */}
-            <div className="flex items-center gap-1 mb-3">
-              <div className="flex items-center">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className={`w-3 h-3 ${
-                      star <= Math.round(product.rating)
-                        ? "fill-[#FFA132] text-[#FFA132]"
-                        : "fill-[#DADFE3] text-[#DADFE3]"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-xs text-[#7C818B]">({product.reviewCount})</span>
-            </div>
-
-            {/* Desktop: Hover Actions | Mobile: Always Visible */}
-            <div className={`space-y-2 transition-all duration-200 md:${isHovered ? "opacity-100 max-h-32" : "opacity-0 max-h-0 overflow-hidden"}`}>
-              {/* Add to Cart Button */}
-              <button
-                onClick={handleAddToCart}
-                className="w-full h-11 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Add to cart
-              </button>
-
-              {/* Compare and Wishlist Icons */}
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={handleCompare}
-                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#11248F] hover:border-[#11248F] transition-colors"
-                  aria-label="Compare"
-                  title="Compare"
-                >
-                  <GitCompare className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={handleAddToWishlist}
-                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#D8125D] hover:border-[#D8125D] transition-colors"
-                  aria-label="Add to wishlist"
-                  title="Add to wishlist"
-                >
-                  <Heart className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile: Always Visible Actions */}
-            <div className="md:hidden space-y-2">
-              {/* Add to Cart Button */}
-              <button
-                onClick={handleAddToCart}
-                className="w-full h-11 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Add to cart
-              </button>
-
-              {/* Compare and Wishlist Icons */}
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={handleCompare}
-                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#11248F] hover:border-[#11248F] transition-colors"
-                  aria-label="Compare"
-                  title="Compare"
-                >
-                  <GitCompare className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={handleAddToWishlist}
-                  className="w-10 h-10 border border-[#DADFE3] rounded-sm flex items-center justify-center text-[#7C818B] hover:text-[#D8125D] hover:border-[#D8125D] transition-colors"
-                  aria-label="Add to wishlist"
-                  title="Add to wishlist"
-                >
-                  <Heart className="w-4 h-4" />
-                </button>
-              </div>
+              <span className="text-xs text-[#7C818B]">{product.vendor}</span>
             </div>
           </div>
         </div>

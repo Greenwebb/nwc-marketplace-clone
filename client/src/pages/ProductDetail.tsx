@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ProductCard, { Product } from "@/components/ProductCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Star, Heart, ShoppingCart, Truck, RotateCcw, Shield, ChevronRight, ChevronDown, Minus, Plus, Share2, GitCompare, Facebook, Twitter, Mail, MessageCircle, ZoomIn, Headphones } from "lucide-react";
@@ -67,44 +68,48 @@ export default function ProductDetail() {
     ],
   };
 
-  const similarProducts = [
+  const similarProducts: Product[] = [
     {
-      id: 1,
+      id: "1",
       name: "ThinkPad X1 Carbon Gen 8 (14\") Laptop",
       price: 1648.99,
       image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400",
       rating: 4,
       reviewCount: 1,
       vendor: "Casual",
+      category: "Laptops",
     },
     {
-      id: 2,
+      id: "2",
       name: "Galaxy Tab S6 10.5 256GB WiFi Android 9.0",
       price: 226.0,
       image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400",
       rating: 5,
       reviewCount: 1,
       vendor: "Sanvo",
+      category: "Tablets",
     },
     {
-      id: 3,
+      id: "3",
       name: "Lenovo 81JW0001US Chromebook S330, 14 HD Display",
       price: 589.9,
       image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400",
       rating: 4,
       reviewCount: 1,
       vendor: "Truffles",
+      category: "Laptops",
     },
     {
-      id: 4,
+      id: "4",
       name: "Beats Pro Over-Ear Headphones – Black",
       price: 55.99,
       oldPrice: 72.0,
-      discount: 22,
+      badge: "sale",
       image: "https://images.unsplash.com/photo-1545127398-14699f92334b?w=400",
       rating: 5,
       reviewCount: 1,
       vendor: "TehchiStore",
+      category: "Headphones",
       colors: 1,
     },
   ];
@@ -603,57 +608,8 @@ export default function ProductDetail() {
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-[#1D2128] mb-6">Similar Products</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {similarProducts.map((item) => (
-              <Link key={item.id} href={`/product/${item.id}`}>
-                <a className="group">
-                  <div className="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="relative aspect-square bg-gray-100">
-                      {item.discount && (
-                        <span className="absolute top-2 left-2 bg-[#D8125D] text-white text-xs px-2 py-1 rounded-sm">
-                          -{item.discount}%
-                        </span>
-                      )}
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-3 md:p-4">
-                      {item.colors && (
-                        <div className="text-xs text-[#7C818B] mb-1">{item.colors} color</div>
-                      )}
-                      <h3 className="text-sm font-medium text-[#1D2128] mb-2 line-clamp-2 group-hover:text-[#11248F]">
-                        {item.name}
-                      </h3>
-                      <div className="flex items-center gap-1 mb-2">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`h-3 w-3 ${
-                              i < item.rating
-                                ? "fill-[#FFA500] text-[#FFA500]"
-                                : "fill-gray-200 text-gray-200"
-                            }`}
-                          />
-                        ))}
-                        <span className="text-xs text-[#7C818B]">({item.reviewCount})</span>
-                      </div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-base md:text-lg font-bold text-[#1D2128]">
-                          ${item.price.toFixed(2)}
-                        </span>
-                        {item.oldPrice && (
-                          <span className="text-sm text-[#7C818B] line-through">
-                            ${item.oldPrice.toFixed(2)}
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-xs text-[#7C818B] mt-1">{item.vendor}</div>
-                    </div>
-                  </div>
-                </a>
-              </Link>
+            {similarProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>

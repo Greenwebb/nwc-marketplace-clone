@@ -317,3 +317,14 @@
 - [x] Fix store card layout and styling with yellow badge
 - [x] Add benefits section at bottom (4 benefit cards)
 - [x] Ensure all responsive breakpoints match original
+
+## Reusable ProductCard Component (User Request)
+- [x] Create ProductCard component with floating wishlist and compare buttons
+- [x] Position wishlist and compare buttons in top-right corner of product image (absolute)
+- [x] Include discount badge, out of stock badge, color variants indicator
+- [x] Show product image, title, rating, price, vendor
+- [x] Update Shop page to use ProductCard component
+- [x] Update Home page featured products to use ProductCard component
+- [x] Update ProductDetail similar products section to use ProductCard component
+- [x] Ensure consistent styling and behavior across all pages
+- [x] Test hover states and button interactions
