@@ -367,3 +367,17 @@
 - [x] Add Contact route to App.tsx navigation
 - [x] Ensure responsive design for mobile, tablet, and desktop
 - [x] Test form submission and all interactions
+
+## Careers Page Creation (User Request)
+- [x] Analyze Motta careers page design from screenshot
+- [x] Create Careers page component with hero section and team photos
+- [x] Add "View Open Roles" button in hero section
+- [x] Add company statistics section (56 People, 4 Countries, 768 Donuts per day)
+- [x] Add "Our values" section with heading and description
+- [x] Add values cards (Make service your mission, Strive for excellence, Win Together)
+- [x] Add office locations section (Los Angeles, California, New York)
+- [x] Add FAQ section with "Go to FAQs" button
+- [x] Add bottom CTA cards (Contact Us, Help Center, Give Feedback)
+- [x] Add Careers route to App.tsx navigation
+- [x] Ensure responsive design for mobile, tablet, and desktop
+- [x] Test all interactions and sections

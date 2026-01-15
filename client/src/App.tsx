@@ -11,6 +11,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import Contact from "./pages/Contact";
+import Careers from "./pages/Careers";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/cart" component={Cart} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/contact" component={Contact} />
+      <Route path="/careers" component={Careers} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
