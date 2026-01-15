@@ -16,6 +16,10 @@ import About from "./pages/About";
 import HelpCenter from "./pages/HelpCenter";
 import FAQ from "./pages/FAQ";
 import OrderTracking from "./pages/OrderTracking";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
+import Legal from "./pages/Legal";
+import SiteMap from "./pages/SiteMap";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -32,6 +36,10 @@ function Router() {
       <Route path="/help-center" component={HelpCenter} />
       <Route path="/faq" component={FAQ} />
       <Route path="/track-order" component={OrderTracking} />
+      <Route path="/legal/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/legal/terms-of-use" component={TermsOfUse} />
+      <Route path="/legal" component={Legal} />
+      <Route path="/site-map" component={SiteMap} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

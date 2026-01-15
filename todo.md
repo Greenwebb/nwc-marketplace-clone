@@ -458,3 +458,17 @@
 - [x] Add Give Feedback option with icon and description
 - [x] Ensure responsive design for mobile, tablet, and desktop
 - [x] Test 404 page navigation and all links
+
+## Legal Pages Creation (User Request)
+- [x] Analyze Motta legal pages design and structure
+- [x] Create PrivacyPolicy page component with sidebar navigation
+- [x] Create TermsOfUse page component with sidebar navigation
+- [x] Create Legal landing page component (default legal page)
+- [x] Create SiteMap page component (simple layout, no sidebar)
+- [x] Add legal document content sections (Introduction, General, Liability, Indemnity, etc.)
+- [x] Add last revised dates to each legal document
+- [x] Add sidebar navigation component for legal pages
+- [x] Add routes for all legal pages (/legal/privacy-policy, /legal/terms-of-use, /legal, /site-map)
+- [x] Update Footer to link to Privacy Policy and Terms of Use
+- [x] Ensure responsive design (sidebar becomes top tabs on mobile)
+- [x] Test all legal pages and navigation links
