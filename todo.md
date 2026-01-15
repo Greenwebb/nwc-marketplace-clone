@@ -169,3 +169,8 @@
 - [x] Remove gray background padding from product image
 - [x] Make product image fill entire card width
 - [x] Ensure image maintains aspect ratio without visible background
+
+## Global Font Change (User Request)
+- [x] Update Google Fonts import to Poppins in index.html
+- [x] Update font-family in index.css to use Poppins
+- [x] Test font rendering across all pages

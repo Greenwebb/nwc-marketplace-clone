@@ -42,11 +42,8 @@
   --color-sidebar-ring: var(--sidebar-ring);
   
   /* Motta Font */
-  --font-sans: 'Outfit', Arial, sans-serif;
+  --font-sans: 'Poppins', Arial, sans-serif;
 }
-
-/* Google Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 :root {
   /* Motta Primary Blue: #11248F - rgb(17, 36, 143) */
