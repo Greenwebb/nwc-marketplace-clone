@@ -472,3 +472,16 @@
 - [x] Update Footer to link to Privacy Policy and Terms of Use
 - [x] Ensure responsive design (sidebar becomes top tabs on mobile)
 - [x] Test all legal pages and navigation links
+
+## UI Layer Restructuring for Multi-Vendor Marketplace (User Request)
+- [x] Analyze current pages directory structure
+- [x] Create new directory structure: pages/(public), pages/(vendor), pages/(customer)
+- [x] Move public marketplace pages to pages/(public) folder
+- [x] Move vendor-related pages to pages/(vendor) folder
+- [x] Move customer-related pages to pages/(customer) folder
+- [x] Keep shared/common pages in root pages directory
+- [x] Update all import paths in App.tsx
+- [x] Update all internal imports within moved files
+- [x] Test all pages after restructuring
+- [x] Verify all routes still work correctly
+- [x] Document the new file structure

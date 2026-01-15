@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { Link } from 'wouter';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface FAQItem {
   question: string;

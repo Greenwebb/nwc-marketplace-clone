@@ -5,17 +5,20 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { BottomNav } from "./components/BottomNav";
-import Home from "./pages/Home";
-import Shop from "./pages/Shop";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Dashboard from "./pages/Dashboard";
-import Contact from "./pages/Contact";
-import Careers from "./pages/Careers";
-import About from "./pages/About";
-import HelpCenter from "./pages/HelpCenter";
-import FAQ from "./pages/FAQ";
-import OrderTracking from "./pages/OrderTracking";
+// Public Marketplace Pages
+import Home from "./pages/(public)/Home";
+import Shop from "./pages/(public)/Shop";
+import ProductDetail from "./pages/(public)/ProductDetail";
+import Contact from "./pages/(public)/Contact";
+import Careers from "./pages/(public)/Careers";
+import About from "./pages/(public)/About";
+import HelpCenter from "./pages/(public)/HelpCenter";
+import FAQ from "./pages/(public)/FAQ";
+import OrderTracking from "./pages/(public)/OrderTracking";
+
+// Customer Dashboard Pages
+import Cart from "./pages/(customer)/Cart";
+import Dashboard from "./pages/(customer)/Dashboard";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import Legal from "./pages/Legal";
