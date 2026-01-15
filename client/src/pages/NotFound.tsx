@@ -53,21 +53,6 @@ export default function NotFound() {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Contact Us */}
-              <div className="flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                  <MessageCircle className="w-6 h-6 text-gray-700" />
-                </div>
-                <p className="text-sm text-gray-600 mb-3">
-                  Didn't find what you were looking for?
-                </p>
-                <Link href="/contact">
-                  <a className="text-base font-medium text-gray-900 hover:text-[#1E40AF] transition-colors underline">
-                    Contact Us
-                  </a>
-                </Link>
-              </div>
-
               {/* Help Center */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-4">
@@ -79,6 +64,21 @@ export default function NotFound() {
                 <Link href="/help-center">
                   <a className="text-base font-medium text-gray-900 hover:text-[#1E40AF] transition-colors underline">
                     Help Center
+                  </a>
+                </Link>
+              </div>
+
+              {/* Contact Us */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                  <MessageCircle className="w-6 h-6 text-gray-700" />
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Didn't find what you were looking for?
+                </p>
+                <Link href="/contact">
+                  <a className="text-base font-medium text-gray-900 hover:text-[#1E40AF] transition-colors underline">
+                    Contact Us
                   </a>
                 </Link>
               </div>
