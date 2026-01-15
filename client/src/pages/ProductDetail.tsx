@@ -5,13 +5,42 @@ import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Star, Heart, ShoppingCart, Truck, RotateCcw, Shield, ChevronRight, Minus, Plus, Share2, GitCompare } from "lucide-react";
 import { toast } from "sonner";
+import VariantSelector, { ColorVariant, SizeVariant } from "@/components/VariantSelector";
+import { useEffect } from "react";
 
 export default function ProductDetail() {
   const params = useParams();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState<string>();
+  const [selectedSize, setSelectedSize] = useState<string>();
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  // Check scroll position for sticky bar
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show sticky bar when scrolled past 400px
+      setShowStickyBar(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Mock product data
+  const colors: ColorVariant[] = [
+    { name: "Blue", value: "#3B82F6" },
+    { name: "Brown", value: "#92400E" },
+    { name: "Gold", value: "#D97706" },
+  ];
+
+  const sizes: SizeVariant[] = [
+    { name: "128GB", available: true },
+    { name: "256GB", available: true },
+    { name: "512GB", available: true },
+    { name: "1TB", available: false },
+  ];
+
   const product = {
     id: params.id || "1",
     name: "MacBook Air 13-inch, 8GB RAM 256GB SSD Storage – Gold (2020 model)",
@@ -208,6 +237,19 @@ export default function ProductDetail() {
                 {/* Divider */}
                 <div className="border-t border-[#DADFE3] my-6"></div>
 
+                {/* Variant Selector */}
+                <VariantSelector
+                  colors={colors}
+                  sizes={sizes}
+                  selectedColor={selectedColor}
+                  selectedSize={selectedSize}
+                  onColorChange={setSelectedColor}
+                  onSizeChange={setSelectedSize}
+                />
+
+                {/* Divider */}
+                <div className="border-t border-[#DADFE3] my-6"></div>
+
                 {/* Quantity Selector */}
                 <div className="flex items-center gap-4 mb-6">
                   <span className="text-sm font-medium text-[#1D2128]">Quantity:</span>
@@ -358,6 +400,31 @@ export default function ProductDetail() {
       </main>
 
       <Footer />
+
+      {/* Sticky Mobile Add to Cart Bar */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 bg-white border-t border-[#DADFE3] shadow-lg z-50 transition-transform duration-300 lg:hidden ${
+          showStickyBar ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <div className="container py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="text-lg font-bold text-[#D8125D]">${product.price.toFixed(2)}</div>
+              {product.oldPrice && (
+                <div className="text-sm text-[#7C818B] line-through">${product.oldPrice.toFixed(2)}</div>
+              )}
+            </div>
+            <button
+              onClick={handleAddToCart}
+              className="flex-1 h-12 bg-[#11248F] text-white text-sm font-medium rounded-sm flex items-center justify-center gap-2 hover:bg-[#0d1c6e] transition-colors"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
