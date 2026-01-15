@@ -23,6 +23,9 @@ import {
   Tablet,
   Headphones,
   Router,
+  ArrowLeftRight,
+  Package,
+  HelpCircle,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -50,9 +53,11 @@ const benefits = [
 export default function Header() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const categoryRef = useRef<HTMLDivElement>(null);
+  const accountMenuRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll for sticky header
   useEffect(() => {
@@ -170,15 +175,16 @@ export default function Header() {
               </button>
 
               {/* Account */}
-              <Link href="/dashboard">
-                <a className="hidden lg:flex items-center gap-2 px-3 py-2 text-white hover:bg-white/10 rounded-sm transition-colors">
-                  <User className="h-5 w-5" />
-                  <div className="flex flex-col items-start leading-tight">
-                    <span className="text-[11px] text-white/60">Welcome</span>
-                    <span className="text-sm font-medium">Sign in / Register</span>
-                  </div>
-                </a>
-              </Link>
+              <button
+                onClick={() => setIsAccountMenuOpen(true)}
+                className="hidden lg:flex items-center gap-2 px-3 py-2 text-white hover:bg-white/10 rounded-sm transition-colors"
+              >
+                <User className="h-5 w-5" />
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="text-[11px] text-white/60">Welcome</span>
+                  <span className="text-sm font-medium">Sign in / Register</span>
+                </div>
+              </button>
 
               {/* Mobile Account Icon */}
               <Link href="/dashboard">
@@ -283,6 +289,104 @@ export default function Header() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Account Side Menu */}
+      {isAccountMenuOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+            onClick={() => setIsAccountMenuOpen(false)}
+          />
+          
+          {/* Side Panel */}
+          <div
+            ref={accountMenuRef}
+            className="fixed top-0 right-0 h-full w-[380px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-[#DADFE3]">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-[#1D2128] flex items-center justify-center">
+                  <User className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="text-xl font-semibold text-[#1D2128]">Account</h2>
+              </div>
+              <button
+                onClick={() => setIsAccountMenuOpen(false)}
+                className="p-2 hover:bg-[#ECF0F4] rounded-sm transition-colors"
+              >
+                <X className="h-5 w-5 text-[#1D2128]" />
+              </button>
+            </div>
+
+            {/* Menu Items */}
+            <div className="p-6">
+              <nav className="space-y-1">
+                <Link href="/login">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <User className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" />
+                    <span className="text-[15px]">Sign In</span>
+                  </a>
+                </Link>
+
+                <Link href="/register">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <User className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" />
+                    <span className="text-[15px]">Create Account</span>
+                  </a>
+                </Link>
+
+                <Link href="/wishlist">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <Heart className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" />
+                    <span className="text-[15px]">Wishlist</span>
+                  </a>
+                </Link>
+
+                <Link href="/compare">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <ArrowLeftRight className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" />
+                    <span className="text-[15px]">Compare</span>
+                  </a>
+                </Link>
+
+                <Link href="/track-order">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <Package className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" />
+                    <span className="text-[15px]">Track Order</span>
+                  </a>
+                </Link>
+
+                <Link href="/help">
+                  <a
+                    className="flex items-center gap-4 px-4 py-3 text-[#1D2128] hover:bg-[#ECF0F4] rounded-sm transition-colors group"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                  >
+                    <HelpCircle className="h-5 w-5 text-[#7C818B] group-hover:text-[#11248F]" />
+                    <span className="text-[15px]">Help Center</span>
+                  </a>
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </>
       )}
     </header>
   );

@@ -239,3 +239,17 @@
 - [x] Match dropdown width and positioning
 - [x] Add hover states for dropdown items
 - [x] Ensure proper typography and icon sizing
+
+## Account Side Menu (User Request)
+- [x] Create slide-in panel component that opens from right side
+- [x] Add Account header with user icon and close button
+- [x] Add Sign In menu item with user icon
+- [x] Add Create Account menu item with user icon
+- [x] Add Wishlist menu item with heart icon
+- [x] Add Compare menu item with arrows icon
+- [x] Add Track Order menu item with package icon
+- [x] Add Help Center menu item with question icon
+- [x] Implement slide-in/out animation
+- [x] Add overlay background that closes menu on click
+- [x] Connect to Sign in/Register button in header
+- [x] Match exact styling and spacing from screenshot
