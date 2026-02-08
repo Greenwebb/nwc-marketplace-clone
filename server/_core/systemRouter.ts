@@ -1,10 +1,6 @@
 import { z } from "zod";
-import { exec } from "child_process";
-import { promisify } from "util";
 import { notifyOwner } from "./notification";
 import { adminProcedure, publicProcedure, router } from "./trpc";
-
-const execAsync = promisify(exec);
 
 export const systemRouter = router({
   health: publicProcedure
@@ -30,21 +26,4 @@ export const systemRouter = router({
         success: delivered,
       } as const;
     }),
-
-  gitPull: adminProcedure.mutation(async () => {
-    try {
-      const { stdout, stderr } = await execAsync("git pull");
-      return {
-        success: true,
-        output: stdout,
-        error: stderr,
-      };
-    } catch (error: any) {
-      return {
-        success: false,
-        output: error.stdout || "",
-        error: error.stderr || error.message,
-      };
-    }
-  }),
 });

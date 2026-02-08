@@ -29,7 +29,6 @@ import {
   HelpCircle,
   RefreshCw,
 } from "lucide-react";
-import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
@@ -64,24 +63,13 @@ export default function Header() {
   const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
   const [isPulling, setIsPulling] = useState(false);
 
-  const gitPullMutation = trpc.system.gitPull.useMutation({
-    onSuccess: (data) => {
-      setIsPulling(false);
-      if (data.success) {
-        toast.success("Successfully pulled latest changes");
-      } else {
-        toast.error(`Pull failed: ${data.error}`);
-      }
-    },
-    onError: (error) => {
-      setIsPulling(false);
-      toast.error(`Error: ${error.message}`);
-    },
-  });
-
   const handleGitPull = () => {
     setIsPulling(true);
-    gitPullMutation.mutate();
+    // Mocking the git pull behavior for frontend design demonstration
+    setTimeout(() => {
+      setIsPulling(false);
+      toast.success("Successfully pulled latest changes (Design Mock)");
+    }, 2000);
   };
   
   // Mock cart data - replace with real cart state management
