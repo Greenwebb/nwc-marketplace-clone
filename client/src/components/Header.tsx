@@ -27,7 +27,10 @@ import {
   ArrowLeftRight,
   Package,
   HelpCircle,
+  RefreshCw,
 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
 // Category data with icons
@@ -59,6 +62,27 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOverlayOpen, setIsSearchOverlayOpen] = useState(false);
+  const [isPulling, setIsPulling] = useState(false);
+
+  const gitPullMutation = trpc.system.gitPull.useMutation({
+    onSuccess: (data) => {
+      setIsPulling(false);
+      if (data.success) {
+        toast.success("Successfully pulled latest changes");
+      } else {
+        toast.error(`Pull failed: ${data.error}`);
+      }
+    },
+    onError: (error) => {
+      setIsPulling(false);
+      toast.error(`Error: ${error.message}`);
+    },
+  });
+
+  const handleGitPull = () => {
+    setIsPulling(true);
+    gitPullMutation.mutate();
+  };
   
   // Mock cart data - replace with real cart state management
   const [cartItems, setCartItems] = useState([
@@ -180,6 +204,20 @@ export default function Header() {
 
             {/* Right Section: Icons */}
             <div className="flex items-center gap-1 md:gap-2">
+              {/* Git Pull Button */}
+              <button
+                onClick={handleGitPull}
+                disabled={isPulling}
+                className="hidden xl:flex items-center gap-2 px-3 py-2 text-white hover:bg-white/10 rounded-sm transition-colors disabled:opacity-50"
+                title="Pull latest changes"
+              >
+                <RefreshCw className={`h-5 w-5 ${isPulling ? "animate-spin" : ""}`} />
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="text-[11px] text-white/60">Git</span>
+                  <span className="text-sm font-medium">Pull</span>
+                </div>
+              </button>
+
               {/* Region Selector - Desktop */}
               <button className="hidden xl:flex items-center gap-2 px-3 py-2 text-white hover:bg-white/10 rounded-sm transition-colors">
                 <span className="text-lg">🇬🇧</span>
