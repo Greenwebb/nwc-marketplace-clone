@@ -67,7 +67,7 @@ function Router() {
           <VendorDashboard />
         </ProtectedRoute>
       </Route>
-      <Route path="/store/vendor/tech-haven" component={TechHavenStore} />
+      <Route path="/store/vendor/:id" component={TechHavenStore} />
       <Route path="/select-role">
         {user ? (
           <RoleSelection onComplete={() => window.location.href = '/'} />

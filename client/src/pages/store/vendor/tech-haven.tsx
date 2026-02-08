@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "wouter";
 import { 
   Star, 
   MapPin, 
@@ -114,6 +115,15 @@ const STORE_CATEGORIES = [
 ];
 
 export default function TechHavenStore() {
+  const params = useParams();
+  const vendorId = params.id || "tech-haven";
+  
+  // Format vendor name from ID (e.g., tech-haven -> Tech Haven)
+  const vendorName = vendorId
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
   const [activeTab, setActiveTab] = useState("products");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -128,7 +138,7 @@ export default function TechHavenStore() {
           <span>/</span>
           <a href="/shop" className="hover:text-[#11248F]">Store</a>
           <span>/</span>
-          <span className="text-[#1D2128] font-medium">Tech Haven</span>
+          <span className="text-[#1D2128] font-medium">{vendorName}</span>
         </nav>
 
         {/* Store Banner & Info Section */}
@@ -144,7 +154,9 @@ export default function TechHavenStore() {
             {/* Store Logo Overlay */}
             <div className="absolute -bottom-12 left-8 w-32 h-32 rounded-full bg-white p-1 shadow-lg border-4 border-white">
               <div className="w-full h-full rounded-full bg-[#1D2128] flex items-center justify-center overflow-hidden">
-                <span className="text-white text-3xl font-bold">TH</span>
+                <span className="text-white text-3xl font-bold">
+                  {vendorName.split(" ").map(n => n[0]).join("").toUpperCase()}
+                </span>
               </div>
             </div>
           </div>
@@ -153,8 +165,7 @@ export default function TechHavenStore() {
           <div className="pt-16 pb-6 px-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-[#1D2128]">Tech Haven</h1>
-                <div className="flex items-center gap-1">
+             <h1 className="text-3xl font-bold text-[#1D2128] mb-2">{vendorName}</h1>               <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-[#FFA500] text-[#FFA500]" />
                   ))}
