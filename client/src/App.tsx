@@ -26,6 +26,7 @@ import Dashboard from "./pages/(customer)/Dashboard";
 
 // Vendor Dashboard Pages
 import VendorDashboard from "./pages/(vendor)/VendorDashboard";
+import TechHavenStore from "./pages/store/vendor/tech-haven";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import Legal from "./pages/Legal";
@@ -61,6 +62,7 @@ function Router() {
           <VendorDashboard />
         </ProtectedRoute>
       </Route>
+      <Route path="/store/vendor/tech-haven" component={TechHavenStore} />
       <Route path="/select-role">
         {user ? (
           <RoleSelection onComplete={() => window.location.href = '/'} />
