@@ -20,6 +20,7 @@ import HelpCenter from "./pages/(public)/HelpCenter";
 import FAQ from "./pages/(public)/FAQ";
 import OrderTracking from "./pages/(public)/OrderTracking";
 import StoreListing from "./pages/(public)/StoreListing";
+import VendorOnboarding from "./pages/(vendor)/onboarding";
 
 // Customer Dashboard Pages
 import Cart from "./pages/(customer)/Cart";
@@ -49,6 +50,7 @@ function Router() {
       <Route path="/shop" component={Shop} />
       <Route path="/store-listing" component={StoreListing} />
       <Route path="/stores" component={StoreListing} />
+      <Route path="/vendor/onboarding" component={VendorOnboarding} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart">
         <ProtectedRoute requireAuth>
