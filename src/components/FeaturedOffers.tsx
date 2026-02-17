@@ -64,12 +64,13 @@ export default function FeaturedOffers() {
         </div>
 
         {/* Offers Grid */}
+        {/* Offers Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {offers.map((offer) => (
             <Link key={offer.id} href={offer.link}>
-              <a className="group block bg-[#F5F5F7] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+              <a className="group block rounded-2xl overflow-hidden transition-shadow flex flex-col items-center">
                 {/* Image Container */}
-                <div className="relative aspect-square">
+                <div className="relative aspect-square h-60">
                   {offer.badge && (
                     <span
                       className={`absolute top-4 left-4 ${offer.badgeColor} text-white text-xs font-semibold px-3 py-1 rounded-full`}
@@ -80,13 +81,13 @@ export default function FeaturedOffers() {
                   <img
                     src={offer.image}
                     alt={offer.title}
-                    className="w-full h-full object-contain"
+                    className="w-full rounded-full h-full object-contain"
                   />
                 </div>
 
                 {/* Content */}
-                <div className="p-4 bg-white">
-                  <h3 className="text-sm font-medium text-primary mb-3 line-clamp-2 min-h-[40px]">
+                <div className="items-center p-4 bg-white w-full">
+                  <h3 className="text-sm text-center font-medium text-primary mb-3 line-clamp-2 min-h-[40px]">
                     {offer.title}
                   </h3>
                   <Button className="w-full h-10 rounded-2xl text-sm font-medium">Shop Now</Button>
