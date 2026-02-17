@@ -1,0 +1,477 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --text-base: 0.8rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* newworld-marketplace Font */
+  --font-sans: 'Poppins', Arial, sans-serif;
+}
+
+:root {
+  /* Brand Primary Blue: #012642 */
+  --primary: #012642;
+  --primary-foreground: #ffffff;
+  
+  /* newworld-marketplace Coral: #D8125D */
+  --destructive: oklch(0.50 0.22 10);
+  --destructive-foreground: oklch(1 0 0);
+  
+  /* newworld-marketplace Text: #1D2128 */
+  --foreground: oklch(0.225 0.02 255);
+  --background: oklch(1 0 0);
+  
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.225 0.02 255);
+  
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.225 0.02 255);
+  
+  /* Brand Secondary Yellow: #f7c600 */
+  --secondary: #f7c600;
+  --secondary-foreground: #012642;
+  
+  --muted: oklch(0.95 0.01 250);
+  /* newworld-marketplace Muted Text: #7C818B */
+  --muted-foreground: oklch(0.55 0.02 255);
+  
+  --accent: oklch(0.95 0.01 250);
+  --accent-foreground: oklch(0.225 0.02 255);
+  
+  /* newworld-marketplace Border: #DADFE3 */
+  --border: oklch(0.90 0.01 250);
+  --input: oklch(0.90 0.01 250);
+  --ring: #012642;
+  
+  /* newworld-marketplace uses minimal border radius: 2px */
+  --radius: 0.125rem;
+  
+  --chart-1: #012642;
+  --chart-2: oklch(0.50 0.22 10);
+  --chart-3: oklch(0.70 0.18 70);
+  --chart-4: oklch(0.80 0.15 90);
+  --chart-5: oklch(0.60 0.15 150);
+  
+  --sidebar: oklch(0.98 0.005 250);
+  --sidebar-foreground: oklch(0.225 0.02 255);
+  --sidebar-primary: #012642;
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.95 0.01 250);
+  --sidebar-accent-foreground: oklch(0.225 0.02 255);
+  --sidebar-border: oklch(0.90 0.01 250);
+  --sidebar-ring: #012642;
+  
+  /* newworld-marketplace Custom Properties */
+  --Newworld-Marketplace-primary: #012642;
+  --newworld-marketplace-primary-dark: #1D2128;
+  --newworld-marketplace-coral: #D8125D;
+  --newworld-marketplace-orange: #FF7316;
+  --newworld-marketplace-yellow: #f7c600;
+  --newworld-marketplace-text: #1D2128;
+  --newworld-marketplace-text-secondary: #282C33;
+  --newworld-marketplace-text-muted: #7C818B;
+  --newworld-marketplace-border: #DADFE3;
+  --newworld-marketplace-bg-light: #ECF0F4;
+  --newworld-marketplace-sale-bg: rgba(255, 51, 28, 0.12);
+  --newworld-marketplace-sale-text: #FF331C;
+  --newworld-marketplace-hot-bg: rgba(255, 116, 23, 0.12);
+  --newworld-marketplace-hot-text: #FF7417;
+  --newworld-marketplace-header-height: 86px;
+  --newworld-marketplace-search-height: 48px;
+  --newworld-marketplace-button-height: 46px;
+}
+
+.dark {
+  --primary: #012642;
+  --primary-foreground: #ffffff;
+  --background: oklch(0.14 0.005 255);
+  --foreground: oklch(0.85 0.005 255);
+  --card: oklch(0.21 0.006 255);
+  --card-foreground: oklch(0.85 0.005 255);
+  --popover: oklch(0.21 0.006 255);
+  --popover-foreground: oklch(0.85 0.005 255);
+  --secondary: #f7c600;
+  --secondary-foreground: #012642;
+  --muted: oklch(0.27 0.006 255);
+  --muted-foreground: oklch(0.70 0.015 255);
+  --accent: oklch(0.27 0.006 255);
+  --accent-foreground: oklch(0.92 0.005 255);
+  --destructive: oklch(0.70 0.19 22);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: #012642;
+  --sidebar: oklch(0.21 0.006 255);
+  --sidebar-foreground: oklch(0.85 0.005 255);
+  --sidebar-accent: oklch(0.27 0.006 255);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.48 0.24 265);
+}
+
+@layer base {
+ 
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-family: 'Poppins', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  
+  /* Add padding for mobile bottom nav */
+  @media (max-width: 767px) {
+    body {
+      padding-bottom: 64px;
+    }
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+  
+  /* newworld-marketplace Typography */
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 45px;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+}
+
+@layer components {
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  
+  /* newworld-marketplace Button Styles */
+  .newworld-marketplace-btn-primary {
+    background-color: var(--newworld-marketplace-primary);
+    color: white;
+    height: var(--newworld-marketplace-button-height);
+    padding: 0 24px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease;
+  }
+  
+  .newworld-marketplace-btn-primary:hover {
+    background-color: #0d1c6e;
+  }
+  
+  .newworld-marketplace-btn-outline {
+    background-color: transparent;
+    color: var(--newworld-marketplace-text);
+    height: var(--newworld-marketplace-button-height);
+    padding: 0 24px;
+    border: 1px solid var(--newworld-marketplace-border);
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease;
+  }
+  
+  .newworld-marketplace-btn-outline:hover {
+    border-color: var(--newworld-marketplace-primary);
+    color: var(--newworld-marketplace-primary);
+  }
+}
+
+@layer utilities {
+  .benefits-marquee {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .benefits-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: benefits-slide 46s linear infinite;
+    will-change: transform;
+  }
+
+  .benefits-marquee-segment {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  @keyframes benefits-slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Override Tailwind's built-in container utility explicitly */
+  .container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem; /* px-4 */
+  }
+
+  @media (min-width: 48rem) {
+    .container {
+      max-width: 48rem;
+      padding-inline: 1.5rem; /* px-6 at ~947px viewport */
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .container {
+      max-width: 64rem;
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .container {
+      max-width: 74rem;
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 96rem) {
+    .container {
+      max-width: 82rem;
+      padding-inline: 2rem;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* newworld-marketplace Badge Styles */
+  .newworld-marketplace-badge-sale {
+    background-color: var(--newworld-marketplace-sale-bg);
+    color: var(--newworld-marketplace-sale-text);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 2px;
+  }
+  
+  .newworld-marketplace-badge-hot {
+    background-color: var(--newworld-marketplace-hot-bg);
+    color: var(--newworld-marketplace-hot-text);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 2px;
+  }
+  
+  .newworld-marketplace-badge-new {
+    background-color: var(--newworld-marketplace-primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 2px;
+  }
+  
+  /* newworld-marketplace Card Hover */
+  .newworld-marketplace-card-hover {
+    transition: box-shadow 200ms ease;
+  }
+  
+  .newworld-marketplace-card-hover:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* newworld-marketplace Text Utilities */
+  .newworld-marketplace-text-primary {
+    color: var(--newworld-marketplace-text);
+  }
+  
+  .newworld-marketplace-text-muted {
+    color: var(--newworld-marketplace-text-muted);
+  }
+  
+  .newworld-marketplace-text-link {
+    color: var(--newworld-marketplace-primary);
+    transition: color 150ms ease;
+  }
+  
+  .newworld-marketplace-text-link:hover {
+    color: #0d1c6e;
+  }
+  
+  /* newworld-marketplace Price Styles */
+  .newworld-marketplace-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--newworld-marketplace-text);
+  }
+  
+  .newworld-marketplace-price-old {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--newworld-marketplace-text-muted);
+    text-decoration: line-through;
+  }
+  
+  .newworld-marketplace-price-sale {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--newworld-marketplace-coral);
+  }
+  
+  /* newworld-marketplace Category Label */
+  .newworld-marketplace-category-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--newworld-marketplace-text-muted);
+    line-height: 16px;
+  }
+  
+  /* newworld-marketplace Product Title */
+  .newworld-marketplace-product-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--newworld-marketplace-text);
+    line-height: 18px;
+  }
+  
+  /* newworld-marketplace Vendor */
+  .newworld-marketplace-vendor {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--newworld-marketplace-text-muted);
+  }
+  
+  /* Star Rating */
+  .newworld-marketplace-star {
+    color: var(--newworld-marketplace-yellow);
+  }
+  
+  .newworld-marketplace-star-empty {
+    color: var(--newworld-marketplace-border);
+  }
+
+  .text-price {
+    @apply text-sm font-bold;
+    color: var(--newworld-marketplace-text);
+  }
+
+  .text-price-old {
+    @apply text-sm line-through;
+    color: var(--newworld-marketplace-text-muted);
+  }
+
+  .badge-sale {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium;
+    background-color: var(--newworld-marketplace-sale-bg);
+    color: var(--newworld-marketplace-sale-text);
+    border-radius: 2px;
+  }
+
+  .badge-new {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium text-white;
+    background-color: var(--newworld-marketplace-primary);
+    border-radius: 2px;
+  }
+
+  .badge-hot {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium;
+    background-color: var(--newworld-marketplace-hot-bg);
+    color: var(--newworld-marketplace-hot-text);
+    border-radius: 2px;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--newworld-marketplace-bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--newworld-marketplace-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--newworld-marketplace-text-muted);
+}
+
+.overflow-x-auto {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
