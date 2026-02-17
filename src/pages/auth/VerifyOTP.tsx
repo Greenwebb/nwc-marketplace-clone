@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getPendingOTPContact, verifyOTP } from "@/lib/mockAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 
@@ -27,7 +27,8 @@ export default function VerifyOTP() {
   const [resendTimer, setResendTimer] = useState(RESEND_COOLDOWN);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [, setLocation] = useLocation();
-  const contact = getPendingOTPContact();
+  const { verifyOtp, pendingOtpContact: contact, postAuthRedirect } = useAuth();
+  const returnTo = new URLSearchParams(window.location.search).get("returnTo");
 
   // Redirect if no pending contact
   useEffect(() => {
@@ -57,19 +58,24 @@ export default function VerifyOTP() {
 
       setLoading(true);
       setTimeout(() => {
-        const user = verifyOTP(fullCode);
-        if (user) {
+        verifyOtp(fullCode).then((user) => {
+          if (!user) {
+            toast.error("Invalid OTP. Please try again.");
+            setOtp(Array(OTP_LENGTH).fill(""));
+            inputRefs.current[0]?.focus();
+            return;
+          }
+
           toast.success("Verified successfully!");
-          setLocation(user.role ? "/" : "/select-role");
-        } else {
-          toast.error("Invalid OTP. Please try again.");
-          setOtp(Array(OTP_LENGTH).fill(""));
-          inputRefs.current[0]?.focus();
-        }
-        setLoading(false);
+          setLocation(postAuthRedirect(returnTo));
+        }).catch(() => {
+          toast.error("Failed to verify OTP. Please try again.");
+        }).finally(() => {
+          setLoading(false);
+        });
       }, 600);
     },
-    [setLocation],
+    [setLocation, verifyOtp, returnTo, postAuthRedirect],
   );
 
   const handleChange = (index: number, value: string) => {
@@ -123,7 +129,10 @@ export default function VerifyOTP() {
 
   if (!contact) return null;
 
-  const backPath = contact.flow === "signup" ? "/auth/signup" : "/auth/login";
+  const backBasePath = contact.flow === "signup" ? "/auth/signup" : "/auth/login";
+  const backPath = returnTo
+    ? `${backBasePath}?returnTo=${encodeURIComponent(returnTo)}`
+    : backBasePath;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#ECF0F4] px-4">
@@ -206,3 +215,4 @@ export default function VerifyOTP() {
     </div>
   );
 }
+

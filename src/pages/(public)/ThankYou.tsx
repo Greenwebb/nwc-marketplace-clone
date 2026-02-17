@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ThankYouState from "@/components/ThankYouState";
-import { useSearch } from "wouter";
+import { useSearch } from "@/lib/router";
 
 export default function ThankYou() {
   const search = useSearch();
@@ -21,3 +21,4 @@ export default function ThankYou() {
     </div>
   );
 }
+

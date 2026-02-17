@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 
 interface TimeLeft {
   hours: number;
@@ -88,3 +88,4 @@ export default function DailyDeals() {
     </div>
   );
 }
+

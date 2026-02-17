@@ -1,5 +1,6 @@
 import { Home, Grid3x3, ShoppingCart, User } from 'lucide-react';
-import { Link, useLocation } from 'wouter';
+import { Link, useLocation } from "@/lib/router";
+import { useAuth } from "@/hooks/useAuth";
 
 interface BottomNavProps {
   cartItemCount?: number;
@@ -7,16 +8,21 @@ interface BottomNavProps {
 
 export function BottomNav({ cartItemCount = 0 }: BottomNavProps) {
   const [location] = useLocation();
+  const { isAuthenticated } = useAuth();
 
   const navItems = [
     { icon: Home, label: 'Home', path: '/' },
     { icon: Grid3x3, label: 'Shop', path: '/shop' },
     { icon: ShoppingCart, label: 'Cart', path: '/cart', badge: cartItemCount },
-    { icon: User, label: 'Account', path: '/dashboard' },
+    {
+      icon: User,
+      label: isAuthenticated ? 'Account' : 'Login',
+      path: isAuthenticated ? '/dashboard' : '/auth/login',
+    },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-primary text-white z-50 md:hidden">
+    <nav className="fixed m-2 py-2 bottom-0 rounded-2xl left-0 right-0 bg-primary text-white z-50 md:hidden">
       <div className="flex items-center justify-around h-16 px-2">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -46,3 +52,4 @@ export function BottomNav({ cartItemCount = 0 }: BottomNavProps) {
     </nav>
   );
 }
+

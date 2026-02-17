@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 
 interface Offer {
@@ -99,3 +99,4 @@ export default function FeaturedOffers() {
     </section>
   );
 }
+

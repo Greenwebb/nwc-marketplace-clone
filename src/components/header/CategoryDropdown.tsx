@@ -1,6 +1,6 @@
 import { ChevronDown, Grid3X3 } from "lucide-react";
 import { RefObject } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { HeaderCategory } from "./headerData";
 
 type CategoryDropdownProps = {
@@ -51,3 +51,4 @@ export function CategoryDropdown({
     </div>
   );
 }
+

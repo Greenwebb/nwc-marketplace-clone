@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 
 interface Brand {
   name: string;
@@ -36,3 +36,4 @@ export default function BrandLogos() {
     </section>
   );
 }
+

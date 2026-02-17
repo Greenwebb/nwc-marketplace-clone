@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 
 type BrandLogoProps = {
   mobile?: boolean;
@@ -36,3 +36,4 @@ export function BrandLogo({ mobile = false }: BrandLogoProps) {
     </Link>
   );
 }
+

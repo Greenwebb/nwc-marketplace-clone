@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Facebook, Twitter, Instagram, Youtube, Send, CreditCard, Smartphone } from "lucide-react";
@@ -10,6 +10,7 @@ const footerLinks = {
       { name: "About Us", href: "/about" },
       { name: "Careers", href: "/careers" },
      
+      { name: "Sell on Newworld", href: "/vendor/onboarding" },
       // { name: "Affiliate", href: "/affiliate" },
       { name: "Contact Us", href: "/contact" },
     ],
@@ -219,3 +220,4 @@ export default function Footer() {
     </footer>
   );
 }
+

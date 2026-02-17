@@ -1,5 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 
 type ThankYouStateProps = {
   title?: string;
@@ -48,3 +48,4 @@ export default function ThankYouState({
     </section>
   );
 }
+

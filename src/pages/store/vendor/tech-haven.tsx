@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "wouter";
+import { useParams } from "@/lib/router";
 import { 
   Star, 
   MapPin, 
@@ -351,3 +351,4 @@ export default function TechHavenStore() {
     </div>
   );
 }
+

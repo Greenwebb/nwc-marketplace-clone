@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard, { Product } from "./ProductCard";
 import { Button } from "@/components/ui/button";
@@ -171,3 +171,4 @@ export default function ProductCarousel({
     </section>
   );
 }
+

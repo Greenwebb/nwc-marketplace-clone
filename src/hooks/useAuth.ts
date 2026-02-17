@@ -1,13 +1,11 @@
-import { getAuthUser, useMockAuthUser } from "@/lib/mockAuth";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 export function useAuth() {
-  const user = useMockAuthUser();
+  const auth = useAuthContext();
 
   return {
-    user: user ?? null,
-    isLoading: false,
-    isAuthenticated: !!user,
-    error: null,
-    refetch: async () => ({ data: getAuthUser() }),
+    ...auth,
+    activeMode: auth.effectiveRole,
+    refetch: async () => ({ data: await auth.refresh() }),
   };
 }

@@ -1,6 +1,6 @@
 import { HelpCircle, Heart, Package, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 
 type AccountDrawerProps = {
   isOpen: boolean;
@@ -52,13 +52,13 @@ export function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
 
         <div className="p-8 pt-2">
           <nav className="space-y-1">
-            <Link href="/select-role">
+            <Link href="/auth/login">
               <a
                 className="group flex items-center gap-4 rounded-2xl px-4 py-3 text-primary transition-colors hover:bg-[#fff]"
                 onClick={onClose}
               >
                 <User className="h-5 w-5 text-primary group-hover:text-[#172a9c]" />
-                <span className="text-[15px]">Sign In / Register</span>
+                <span className="text-[15px]">Account Login</span>
               </a>
             </Link>
 
@@ -97,3 +97,4 @@ export function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
     </>
   );
 }
+

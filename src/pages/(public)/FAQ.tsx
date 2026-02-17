@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
-import { Link } from 'wouter';
+import { Link } from "@/lib/router";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -292,7 +292,7 @@ export default function FAQ() {
             </h2>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link href="/help-center">
-                <button className="bg-gray-900 text-white px-8 py-3 rounded-2xl text-base font-medium hover:bg-gray-800 transition-colors">
+                <button className="bg-primary text-white px-8 py-3 rounded-2xl text-base font-medium hover:bg-gray-800 transition-colors">
                   Help Center
                 </button>
               </Link>
@@ -310,3 +310,4 @@ export default function FAQ() {
     </div>
   );
 }
+

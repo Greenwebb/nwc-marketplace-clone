@@ -1,5 +1,5 @@
 import { Search, ShoppingBag, User, RefreshCw, Plane, CreditCard, MessageCircle } from 'lucide-react';
-import { Link } from 'wouter';
+import { Link } from "@/lib/router";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Input } from "@/components/ui/input";
@@ -184,7 +184,7 @@ export default function HelpCenter() {
               Get help with common questions or reach out to our support team.
             </h2>
             <Link href="/contact">
-              <button className="bg-gray-900 text-white px-8 py-4 rounded-2xl text-base font-medium hover:bg-gray-800 transition-colors">
+              <button className="bg-primary text-white px-8 py-4 rounded-2xl text-base font-medium hover:bg-gray-800 transition-colors">
                 Contact Us
               </button>
             </Link>
@@ -196,3 +196,4 @@ export default function HelpCenter() {
     </div>
   );
 }
+

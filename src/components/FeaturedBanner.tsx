@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 
 interface FeaturedBannerProps {
@@ -103,3 +103,4 @@ export default function FeaturedBanner({
     </div>
   );
 }
+

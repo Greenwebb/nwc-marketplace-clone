@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { 
   Laptop, 
   Tv, 
@@ -58,3 +58,4 @@ export default function CategoryGrid() {
     </section>
   );
 }
+

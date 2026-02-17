@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import { Link } from 'wouter';
+import { Link } from "@/lib/router";
 
 interface LegalSidebarProps {
   activePage: 'terms-of-use' | 'privacy-policy' | 'legal';
@@ -47,3 +47,4 @@ export default function LegalSidebar({ activePage }: LegalSidebarProps) {
     </aside>
   );
 }
+

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -240,3 +240,4 @@ export default function StoreListing() {
     </div>
   );
 }
+

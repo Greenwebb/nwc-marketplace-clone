@@ -1,6 +1,6 @@
 import { ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { Input } from "@/components/ui/input";
 
 export type HeaderCartItem = {
@@ -86,7 +86,7 @@ export function CartDrawer({
                       <p className="mb-2 text-xs text-primary">
                         Store: <span className="font-medium">{item.store}</span>
                       </p>
-                      <p className="text-base font-semibold text-primary">${item.price.toFixed(2)}</p>
+                      <p className="text-base font-semibold text-primary">K{item.price.toFixed(2)}</p>
                     </div>
 
                     <button
@@ -153,3 +153,4 @@ export function CartDrawer({
     </>
   );
 }
+

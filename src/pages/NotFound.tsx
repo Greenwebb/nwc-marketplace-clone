@@ -1,5 +1,5 @@
 import { Package, MessageCircle, HelpCircle, MessageSquare } from 'lucide-react';
-import { Link } from 'wouter';
+import { Link } from "@/lib/router";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
@@ -38,7 +38,7 @@ export default function NotFound() {
             <Link href="/">
               <a>
                 <Button
-                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-base font-medium h-auto"
+                  className="bg-primary hover:bg-gray-800 text-white px-8 py-6 text-base font-medium h-auto"
                 >
                   Go to Homepage
                 </Button>
@@ -106,3 +106,4 @@ export default function NotFound() {
     </div>
   );
 }
+

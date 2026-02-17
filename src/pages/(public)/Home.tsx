@@ -426,13 +426,13 @@ export default function Home() {
         <BrandLogos />
 
         {/* Best Sellers Carousel */}
-        <ProductCarousel
+        {/* <ProductCarousel
           title="Best Sellers"
           subtitle="Our most popular products"
           products={bestSellers}
           viewAllLink="/shop?sort=bestselling"
           viewAllText="See All Products"
-        />
+        /> */}
 
         {/* Welcome Popup Banner */}
         <Dialog open={showWelcome} onOpenChange={(open) => { if (!open) handleCloseWelcome(); }}>

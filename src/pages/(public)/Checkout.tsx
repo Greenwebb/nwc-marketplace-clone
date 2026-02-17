@@ -1,5 +1,5 @@
 import { FormEvent, useMemo, useState } from "react";
-import { useLocation } from "wouter";
+import { useLocation } from "@/lib/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -118,7 +118,7 @@ export default function Checkout() {
                   <span className="text-primary">
                     {item.name} x{item.quantity}
                   </span>
-                  <span className="font-medium text-primary">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-medium text-primary">K{(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -126,7 +126,7 @@ export default function Checkout() {
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-[#7C818B]">Subtotal</span>
-                <span className="font-medium text-primary">${subtotal.toFixed(2)}</span>
+                <span className="font-medium text-primary">K{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[#7C818B]">Shipping</span>
@@ -134,7 +134,7 @@ export default function Checkout() {
               </div>
               <div className="flex items-center justify-between border-t border-[#ECF0F4] pt-2">
                 <span className="text-base font-semibold text-primary">Total</span>
-                <span className="text-base font-semibold text-primary">${total.toFixed(2)}</span>
+                <span className="text-base font-semibold text-primary">K{total.toFixed(2)}</span>
               </div>
             </div>
 
@@ -155,3 +155,4 @@ export default function Checkout() {
     </div>
   );
 }
+

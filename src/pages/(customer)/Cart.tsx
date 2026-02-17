@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -165,7 +165,7 @@ export default function Cart() {
                         {/* Price */}
                         <div className="md:col-span-2 text-center">
                           <span className="md:hidden text-xs text-[#7C818B] mr-2">Price:</span>
-                          <span className="text-sm font-medium text-primary">${item.price.toFixed(2)}</span>
+                          <span className="text-sm font-medium text-primary">K{item.price.toFixed(2)}</span>
                         </div>
 
                         {/* Quantity */}
@@ -225,7 +225,7 @@ export default function Cart() {
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-sm">
                       <span className="text-[#7C818B]">Subtotal</span>
-                      <span className="font-medium text-primary">${subtotal.toFixed(2)}</span>
+                      <span className="font-medium text-primary">K{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-[#7C818B]">Shipping</span>
@@ -239,13 +239,13 @@ export default function Cart() {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-[#7C818B]">Tax (10%)</span>
-                      <span className="font-medium text-primary">${tax.toFixed(2)}</span>
+                      <span className="font-medium text-primary">K{tax.toFixed(2)}</span>
                     </div>
 
                     <div className="border-t border-[#DADFE3] pt-3">
                       <div className="flex justify-between">
                         <span className="text-base font-bold text-primary">Total</span>
-                        <span className="text-xl font-bold text-[#D8125D]">${total.toFixed(2)}</span>
+                        <span className="text-xl font-bold text-[#D8125D]">K{total.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -279,7 +279,7 @@ export default function Cart() {
                   {/* Free Shipping Notice */}
                   {subtotal < 50 && (
                     <p className="text-xs text-center text-[#7C818B] mt-4">
-                      Add <span className="font-medium text-[#D8125D]">${(50 - subtotal).toFixed(2)}</span> more to get free shipping
+                      Add <span className="font-medium text-[#D8125D]">K{(50 - subtotal).toFixed(2)}</span> more to get free shipping
                     </p>
                   )}
 
@@ -305,3 +305,4 @@ export default function Cart() {
     </div>
   );
 }
+

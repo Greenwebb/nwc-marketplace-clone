@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "wouter";
+import { Link, useParams } from "@/lib/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard, { Product } from "@/components/ProductCard";
@@ -666,3 +666,4 @@ export default function ProductDetail() {
     </div>
   );
 }
+

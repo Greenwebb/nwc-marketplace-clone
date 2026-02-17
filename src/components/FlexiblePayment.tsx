@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 
 export default function FlexiblePayment() {
@@ -39,3 +39,4 @@ export default function FlexiblePayment() {
     </section>
   );
 }
+

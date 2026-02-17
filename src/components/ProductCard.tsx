@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { Heart, GitCompare, Star, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -68,21 +68,21 @@ export default function ProductCard({ product }: ProductCardProps) {
 
             {/* Discount Badge - Top Left */}
             {product.badge === "sale" && (
-              <span className="absolute top-2 left-2 bg-[#D8125D] text-white text-xs font-semibold px-2 py-1 rounded-2xl">
+              <span className="absolute top-2 left-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded-2xl">
                 {product.badgeText || `-${discount}%`}
               </span>
             )}
 
             {/* Hot Badge - Top Left */}
             {product.badge === "hot" && (
-              <span className="absolute top-2 left-2 bg-[#FF6B00] text-white text-xs font-semibold px-2 py-1 rounded-2xl">
+              <span className="absolute top-2 left-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded-2xl">
                 {product.badgeText || "Hot"}
               </span>
             )}
 
             {/* New Badge - Top Left */}
             {product.badge === "new" && (
-              <span className="absolute top-2 left-2 bg-[#4CAF50] text-white text-xs font-semibold px-2 py-1 rounded-2xl">
+              <span className="absolute top-2 left-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded-2xl">
                 {product.badgeText || "New"}
               </span>
             )}
@@ -162,11 +162,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Price */}
             <div className="flex items-baseline gap-2 mb-2">
               <span className="text-base md:text-lg font-bold text-primary">
-                ${product.price.toFixed(2)}
+                K{product.price.toFixed(2)}
               </span>
               {product.oldPrice && (
                 <span className="text-sm text-[#7C818B] line-through">
-                  ${product.oldPrice.toFixed(2)}
+                  K{product.oldPrice.toFixed(2)}
                 </span>
               )}
             </div>
@@ -193,3 +193,4 @@ export default function ProductCard({ product }: ProductCardProps) {
     </Link>
   );
 }
+

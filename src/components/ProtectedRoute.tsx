@@ -1,59 +1,61 @@
 import { ReactNode, useEffect } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation } from "@/lib/router";
 import { useAuth } from '@/hooks/useAuth';
+import { authorizeRoute } from '@/services/auth/routePolicy';
+import type { ActiveMode, Capability } from '@/types/auth';
 import { toast } from 'sonner';
+import { LoaderDots } from './LoaderDots';
 
 interface ProtectedRouteProps {
   children: ReactNode;
-  requiredRole?: 'customer' | 'vendor' | 'admin';
+  requiredCapability?: Capability;
+  requiredMode?: ActiveMode;
   requireAuth?: boolean;
+  requireVendorOnboarded?: boolean;
 }
 
 export function ProtectedRoute({ 
   children, 
-  requiredRole,
-  requireAuth = true 
+  requiredCapability,
+  requiredMode,
+  requireAuth = true,
+  requireVendorOnboarded = false,
 }: ProtectedRouteProps) {
-  const { user, isLoading } = useAuth();
+  const { state, isLoading } = useAuth();
   const [, setLocation] = useLocation();
+  const access = authorizeRoute(state, {
+    requireAuth,
+    requiredCapability,
+    requiredMode,
+    requireVendorOnboarded,
+  });
 
   useEffect(() => {
     if (isLoading) return;
 
-    // Check if authentication is required
-    if (requireAuth && !user) {
-      toast.error('Please sign in to access this page');
-      setLocation('/auth/login');
+    if (!access.allowed && access.redirectTo) {
+      if (access.reason === 'unauthenticated') {
+        toast.error('Please sign in to access this page');
+      } else if (access.reason === 'vendor_onboarding_required') {
+        toast.error('Please complete vendor onboarding first');
+      } else if (access.reason === 'invalid_mode') {
+        toast.error('Switch account mode to continue');
+      } else if (access.reason === 'missing_capability') {
+        toast.error('You do not have access to this section');
+      }
+      setLocation(access.redirectTo);
       return;
     }
+  }, [access, isLoading, setLocation]);
 
-    // Check if specific role is required
-    if (requiredRole && user) {
-      if (user.role !== requiredRole && user.role !== 'admin') {
-        toast.error(`This page is only accessible to ${requiredRole}s`);
-        setLocation('/');
-        return;
-      }
-    }
-  }, [user, isLoading, requireAuth, requiredRole, setLocation]);
-
-  // Show loading state while checking authentication
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
+    return <LoaderDots fullPage />;
   }
 
-  // Don't render children if user doesn't meet requirements
-  if (requireAuth && !user) {
-    return null;
-  }
-
-  if (requiredRole && user && user.role !== requiredRole && user.role !== 'admin') {
+  if (!access.allowed) {
     return null;
   }
 
   return <>{children}</>;
 }
+

@@ -1,5 +1,5 @@
 import { ChevronDown, Heart, User } from "lucide-react";
-import { Link } from "wouter";
+import { Link } from "@/lib/router";
 import { HeaderCategory } from "./headerData";
 
 type MobileMenuDrawerProps = {
@@ -59,3 +59,4 @@ export function MobileMenuDrawer({
     </div>
   );
 }
+
