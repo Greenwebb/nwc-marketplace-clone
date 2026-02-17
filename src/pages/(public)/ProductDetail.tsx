@@ -277,17 +277,17 @@ export default function ProductDetail() {
             <div className="mb-6">
               <div className="flex items-baseline gap-3 mb-2">
                 <span className="text-3xl md:text-4xl font-bold text-primary">
-                  ${product.price.toFixed(2)}
+                  K{product.price.toFixed(2)}
                 </span>
                 {product.oldPrice && (
                   <span className="text-lg md:text-xl text-[#7C818B] line-through">
-                    ${product.oldPrice.toFixed(2)}
+                    K{product.oldPrice.toFixed(2)}
                   </span>
                 )}
               </div>
               {product.savings && (
                 <div className="text-sm text-[#D8125D]">
-                  Save: ${product.savings.toFixed(2)} ({product.savingsPercent}%)
+                  Save: K{product.savings.toFixed(2)} ({product.savingsPercent}%)
                 </div>
               )}
             </div>
@@ -470,7 +470,7 @@ export default function ProductDetail() {
                 
                 <h3 className="text-xl font-semibold text-primary mb-4">Shipping Policy</h3>
                 <p className="text-primary leading-relaxed">
-                  Free shipping on orders over $99. Standard delivery takes 3-5 business days.
+                  Free shipping on orders over K99. Standard delivery takes 3-5 business days.
                 </p>
               </div>
             </TabsContent>
@@ -578,7 +578,7 @@ export default function ProductDetail() {
               </p>
               <h4 className="font-semibold text-primary mb-2">Shipping Policy</h4>
               <p className="text-sm text-primary leading-relaxed">
-                Free shipping on orders over $99. Standard delivery takes 3-5 business days.
+                Free shipping on orders over K99. Standard delivery takes 3-5 business days.
               </p>
             </CollapsibleContent>
           </Collapsible>
@@ -643,11 +643,11 @@ export default function ProductDetail() {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="text-lg font-bold text-primary">
-                  ${product.price.toFixed(2)}
+                  K{product.price.toFixed(2)}
                 </div>
                 {product.oldPrice && (
                   <div className="text-sm text-[#7C818B] line-through">
-                    ${product.oldPrice.toFixed(2)}
+                    K{product.oldPrice.toFixed(2)}
                   </div>
                 )}
               </div>

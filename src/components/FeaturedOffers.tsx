@@ -14,7 +14,7 @@ interface Offer {
 const offers: Offer[] = [
   {
     id: "1",
-    title: "Free $50 gift card with Xbox Series X pre-order",
+    title: "Free K50 gift card with Xbox Series X pre-order",
     badge: "FREE GIFT",
     badgeColor: "bg-primary",
     image: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400&h=400&fit=crop",
@@ -22,8 +22,8 @@ const offers: Offer[] = [
   },
   {
     id: "2",
-    title: "Save up to $200 on Select Monitors",
-    badge: "SAVE $200",
+    title: "Save up to K200 on Select Monitors",
+    badge: "SAVE K200",
     badgeColor: "bg-primary",
     image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=400&fit=crop",
     link: "/shop",

@@ -371,7 +371,7 @@ export default function VendorStorefront() {
               </div>
 
               <div className="mt-4 pb-4">
-                <p className="text-sm font-semibold text-primary">Max price: ${maxPrice}</p>
+                <p className="text-sm font-semibold text-primary">Max price: K{maxPrice}</p>
                 <input
                   type="range"
                   min={50}
